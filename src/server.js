@@ -1,13 +1,30 @@
 const express = require("express");
 const app = express();
-const PORT = 3000;
+const mongodbConnection = require("./config/mongodb");
+const config = require("./config");
 
-app.listen(PORT, function (err) {
-  if (err) console.log("Error in server setup");
-  console.log("Server listening on Port", PORT);
-});
+async function bootstrap() {
+  const server = app.listen(config.port, async () => {
+    console.log(`Server running on port ${config.port}`);
+    await mongodbConnection();
+  });
 
+  const exitHandler = () => {
+    if (server) {
+      server.close(() => {
+        console.log("Server closed");
+      });
+    }
+    process.exit(1);
+  };
 
-app.get("/",(req,res)=>{
-    res.send("well, it's working ....")
-})
+  const unexpectedErrorHandler = (error) => {
+    console.log(error);
+    exitHandler();
+  };
+
+  process.on("uncaughtException", unexpectedErrorHandler);
+  process.on("unhandledRejection", unexpectedErrorHandler);
+}
+
+bootstrap();
