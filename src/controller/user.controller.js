@@ -1,4 +1,4 @@
-const ClientService = require("../services/client.service");
+const userService = require("../services/user.service");
 
 async function  createClient(req, res) {}
 async function  getClients(req, res) {}

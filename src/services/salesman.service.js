@@ -1,11 +1,16 @@
-const clientModel = require("../models/client");
+const Salesman = require("../models/salesman.model");
 
-async function createClient(req, res) {
-  const addResult = await clientModel.create(req.body);
+async function createSalesman(req, res) {
+  const addResult = await Salesman.create(req.body);
   return addResult;
 }
 async function getClients(req, res) {}
 async function updateClients(req, res) {}
 async function deleteClient(req, res) {}
 
-module.exports = { createClient, updateClients, deleteClient, getClients };
+module.exports = {
+  createClient: createSalesman,
+  updateClients,
+  deleteClient,
+  getClients,
+};

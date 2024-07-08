@@ -1,7 +1,7 @@
-const vendorModel = require("../model/vendor.model");
+const vendorModel = require("../models/vendor.model");
 
-async function createClient(req, res) {
-  const addResult = await clientModel.create(req.body);
+async function createVendor(req, res) {
+  const addResult = await vendorModel.create(req.body);
   return addResult;
 }
 async function getClients(req, res) {}

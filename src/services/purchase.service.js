@@ -1,7 +1,7 @@
-const clientModel = require("../models/client");
+const purchaseModel = require("../models/purchase.model");
 
 async function createClient(req, res) {
-  const addResult = await clientModel.create(req.body);
+  const addResult = await purchaseModel.create(req.body);
   return addResult;
 }
 async function getClients(req, res) {}

@@ -1,7 +1,7 @@
-const clientModel = require("../models/client");
+const salaryModel = require("../models/salary.model");
 
 async function createClient(req, res) {
-  const addResult = await clientModel.create(req.body);
+  const addResult = await salaryModel.create(req.body);
   return addResult;
 }
 async function getClients(req, res) {}

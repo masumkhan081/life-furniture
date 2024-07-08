@@ -1,7 +1,7 @@
-const waiverModel = require("../model/waiver.model");
+const waiverModel = require("../models/waiver.model");
 
-async function createClient(req, res) {
-  const addResult = await clientModel.create(req.body);
+async function createWaiver(req, res) {
+  const addResult = await waiverModel.create(req.body);
   return addResult;
 }
 async function getClients(req, res) {}
