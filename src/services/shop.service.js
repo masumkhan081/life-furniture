@@ -1,4 +1,4 @@
-const shopModel = require("../models/showroom.model");
+const shopModel = require("../models/shop.model");
 
 async function createShop(data) {
   const addResult = await shopModel.create(data);
@@ -9,7 +9,7 @@ async function getShops() {
   return fetchResult;
 }
 async function updateShop({ id, data }) {
-  const editResult = await shopModel.findByIdAndUpdate(id, data);
+  const editResult = await shopModel.findByIdAndUpdate(id, data, { new: true });
   return editResult;
 }
 async function deleteShop(id) {

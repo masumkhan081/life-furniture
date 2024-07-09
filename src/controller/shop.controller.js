@@ -15,11 +15,11 @@ async function getShops(req, res) {
   res.send({
     statusCode: httpStatus.OK,
     success: true,
-    message: "Shop fetched successfully",
+    message: "Shops fetched successfully",
     data: result,
   });
 }
-async function updateShop(req, res) {
+async function updateShop(req, res) { 
   const result = await shopServices.updateShop({
     id: req.params.id,
     data: req.body,

@@ -1,14 +1,15 @@
 const { Schema, model } = require("mongoose");
+const mongoose = require("mongoose");
 
-export const FileSchema = new Schema({
-  size: String,
-  name: String,
-  type: String,
-  url: String,
-  id: String,
-});
+//   const FileSchema = new Schema({
+//   size: String,
+//   name: String,
+//   type: String,
+//   url: String,
+//   id: String,
+// });
 
-export const productSchema = new Schema(
+const productSchema = new Schema(
   {
     title: {
       type: String,
@@ -24,7 +25,6 @@ export const productSchema = new Schema(
       type: String,
       required: true,
     },
-
     quote: {
       type: String,
       required: true,
@@ -33,8 +33,6 @@ export const productSchema = new Schema(
       type: String,
       required: true,
     },
-
-    thumbnail: FileSchema,
     keywords: [String],
   },
   {
@@ -46,4 +44,4 @@ export const productSchema = new Schema(
 
 const productModel = model("products", productSchema);
 
-module.exports =  productModel;
+module.exports = productModel;

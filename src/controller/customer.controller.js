@@ -1,4 +1,4 @@
-const ClientService = require("../services/client.service");
+const ClientService = require("../services/customer.service");
 const httpStatus = require("http-status");
 
 async function createClient(req, res) {
@@ -19,8 +19,8 @@ async function getClients(req, res) {
     data: result,
   });
 }
-async function updateClients(req, res) {
-  const result = await shopServices.getShops();
+async function updateClient(req, res) {
+  const result = await ClientService.getShops();
   res.send({
     statusCode: httpStatus.OK,
     success: true,
@@ -29,7 +29,7 @@ async function updateClients(req, res) {
   });
 }
 async function deleteClient(req, res) {
-  const result = await shopServices.getShops();
+  const result = await ClientService.getShops();
   res.send({
     statusCode: httpStatus.OK,
     success: true,
@@ -38,4 +38,4 @@ async function deleteClient(req, res) {
   });
 }
 
-module.exports = { createClient, updateClients, deleteClient, getClients };
+module.exports = { createClient, updateClient, deleteClient, getClients };

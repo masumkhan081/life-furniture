@@ -1,14 +1,7 @@
 const { Schema, model } = require("mongoose");
+const mongoose = require("mongoose");
 
-export const FileSchema = new Schema({
-  size: String,
-  name: String,
-  type: String,
-  url: String,
-  id: String,
-});
-
-export const salarySchema = new Schema(
+const salarySchema = new Schema(
   {
     title: {
       type: String,
@@ -34,7 +27,6 @@ export const salarySchema = new Schema(
       required: true,
     },
 
-    thumbnail: FileSchema,
     keywords: [String],
   },
   {
@@ -46,4 +38,4 @@ export const salarySchema = new Schema(
 
 const salaryModel = model("salaries", salarySchema);
 
-module.exports =  salaryModel;
+module.exports = salaryModel;

@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const ClientRoutes = require("./client.route");
+const ClientRoutes = require("./customer.route");
 const shopRoutes = require("./shop.route");
 const productRoutes = require("./product.route");
 
@@ -15,7 +15,7 @@ const routes = [
     route: productRoutes,
   },
   {
-    path: "/shop",
+    path: "/shops",
     route: shopRoutes,
   },
 ];

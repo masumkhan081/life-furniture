@@ -1,14 +1,7 @@
 const { Schema, model } = require("mongoose");
+const mongoose = require("mongoose");
 
-export const FileSchema = new Schema({
-  size: String,
-  name: String,
-  type: String,
-  url: String,
-  id: String,
-});
-
-export const purchaseSchema = new Schema(
+const purchaseSchema = new Schema(
   {
     title: {
       type: String,
@@ -24,7 +17,6 @@ export const purchaseSchema = new Schema(
       type: String,
       required: true,
     },
-
     quote: {
       type: String,
       required: true,
@@ -33,8 +25,6 @@ export const purchaseSchema = new Schema(
       type: String,
       required: true,
     },
-
-    thumbnail: FileSchema,
     keywords: [String],
   },
   {
@@ -46,4 +36,4 @@ export const purchaseSchema = new Schema(
 
 const purchaseModel = model("purchases", purchaseSchema);
 
-module.exports =  purchaseModel;
+module.exports = purchaseModel;

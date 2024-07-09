@@ -1,8 +1,7 @@
 const { Schema, model } = require("mongoose");
+const mongoose = require("mongoose");
 
- 
-
-export const orderSchema = new Schema(
+const orderSchema = new Schema(
   {
     title: {
       type: String,
@@ -26,9 +25,7 @@ export const orderSchema = new Schema(
     conclusion: {
       type: String,
       required: true,
-    },
-
-    thumbnail: FileSchema,
+    }, 
     keywords: [String],
   },
   {
@@ -40,4 +37,4 @@ export const orderSchema = new Schema(
 
 const orderModel = model("orders", orderSchema);
 
-module.exports =  orderModel;
+module.exports = orderModel;
