@@ -1,41 +1,17 @@
 const { Schema, model } = require("mongoose");
-
-export const FileSchema = new Schema({
-  size: String,
-  name: String,
-  type: String,
-  url: String,
-  id: String,
-});
-
-export const vendorSchema = new Schema(
+//  need some answers
+const vendorSchema = new Schema(
   {
-    title: {
+    email: {
       type: String,
       required: true,
       unique: true,
     },
-    ref_id: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "refname",
-      required: true,
-    },
-    introduction: {
-      type: String,
-      required: true,
-    },
-
-    quote: {
-      type: String,
-      required: true,
-    },
-    conclusion: {
-      type: String,
-      required: true,
-    },
-
-    thumbnail: FileSchema,
-    keywords: [String],
+    userName: { type: String, required: true, unique: true },
+    phone: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
+    role: { type: String, required: true },
+    profilePicture: { type: String },
   },
   {
     timestamps: true,
@@ -47,4 +23,3 @@ export const vendorSchema = new Schema(
 const vendorModel = model("vendors", vendorSchema);
 
 module.exports = vendorModel;
-

@@ -1,12 +1,6 @@
 const { Schema, model } = require("mongoose");
 
-export const FileSchema = new Schema({
-  size: String,
-  name: String,
-  type: String,
-  url: String,
-  id: String,
-});
+ 
 
 export const orderSchema = new Schema(
   {
@@ -46,4 +40,4 @@ export const orderSchema = new Schema(
 
 const orderModel = model("orders", orderSchema);
 
-export default orderModel;
+module.exports =  orderModel;

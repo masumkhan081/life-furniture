@@ -46,4 +46,4 @@ export const salarySchema = new Schema(
 
 const salaryModel = model("salaries", salarySchema);
 
-export default salaryModel;
+module.exports =  salaryModel;

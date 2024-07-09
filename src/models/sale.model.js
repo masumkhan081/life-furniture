@@ -46,4 +46,4 @@ export const saleSchema = new Schema(
 
 const saleModel = model("sales", saleSchema);
 
-export default saleModel;
+module.exports = saleModel;

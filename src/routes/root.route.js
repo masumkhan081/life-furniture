@@ -1,5 +1,7 @@
 const { Router } = require("express");
 const ClientRoutes = require("./client.route");
+const shopRoutes = require("./shop.route");
+const productRoutes = require("./product.route");
 
 const router = Router();
 
@@ -10,10 +12,14 @@ const routes = [
   },
   {
     path: "/product",
-    route: ClientRoutes,
+    route: productRoutes,
+  },
+  {
+    path: "/shop",
+    route: shopRoutes,
   },
 ];
 
 routes.forEach((route) => router.use(route?.path, route?.route));
 
-export const RootRoutes = router;
+module.exports = router;

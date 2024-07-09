@@ -23,4 +23,4 @@ const fileZodSchema = zod.object({
   }),
 });
 
-export default fileZodSchema;
+module.exports =  fileZodSchema;

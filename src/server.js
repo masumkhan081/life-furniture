@@ -1,13 +1,16 @@
-const express = require("express");
-const app = express();
+/* eslint-disable no-undef */
+const app = require("./app");
 const mongodbConnection = require("./config/mongodb");
 const config = require("./config");
+require("dotenv").config();
 
 async function bootstrap() {
   const server = app.listen(config.port, async () => {
     console.log(`Server running on port ${config.port}`);
     await mongodbConnection();
   });
+
+  app.get;
 
   const exitHandler = () => {
     if (server) {

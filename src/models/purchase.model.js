@@ -46,4 +46,4 @@ export const purchaseSchema = new Schema(
 
 const purchaseModel = model("purchases", purchaseSchema);
 
-export default purchaseModel;
+module.exports =  purchaseModel;

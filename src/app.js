@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const express = require("express");
@@ -22,7 +23,6 @@ app.use(
 
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ extended: true, limit: "50mb" }));
-
 app.use(cookieParser());
 
 app.get("/", (req, res) => {
@@ -32,6 +32,10 @@ app.get("/", (req, res) => {
     message: "I am functional !",
     data: null,
   });
+});
+
+app.get("/hello", (req, res) => {
+  res.send("hi-hello world");
 });
 
 app.use("/", RootRoutes);
@@ -50,4 +54,4 @@ app.use((req, res, next) => {
   next();
 });
 
-export default app;
+module.exports = app;

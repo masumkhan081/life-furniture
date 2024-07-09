@@ -1,41 +1,23 @@
+/* eslint-disable no-unused-vars */
 const { Schema, model } = require("mongoose");
+const mongoose = require("mongoose");
 
-export const FileSchema = new Schema({
-  size: String,
-  name: String,
-  type: String,
-  url: String,
-  id: String,
-});
-
-export const clientSchema = new Schema(
+const clientSchema = new Schema(
   {
-    title: {
+    fullName: {
       type: String,
       required: true,
       unique: true,
     },
-    ref_id: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "refname",
-      required: true,
-    },
-    introduction: {
+    contact: {
       type: String,
       required: true,
+      unique: true,
     },
-
-    quote: {
+    address: {
       type: String,
-      required: true,
+      required: false,
     },
-    conclusion: {
-      type: String,
-      required: true,
-    },
-
-    thumbnail: FileSchema,
-    keywords: [String],
   },
   {
     timestamps: true,
@@ -46,4 +28,4 @@ export const clientSchema = new Schema(
 
 const clientModel = model("clients", clientSchema);
 
-export default clientModel;
+module.exports = clientModel;

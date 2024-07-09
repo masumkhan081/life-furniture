@@ -1,41 +1,30 @@
 const { Schema, model } = require("mongoose");
+const mongoose = require("mongoose");
 
-export const FileSchema = new Schema({
-  size: String,
-  name: String,
-  type: String,
-  url: String,
-  id: String,
-});
+// export const FileSchema = new Schema({
+//   size: String,
+//   name: String,
+//   type: String,
+//   url: String,
+//   id: String,
+// });
 
-export const salesmenSchema = new Schema(
+const salesmenSchema = new Schema(
   {
-    title: {
+    userInfo: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "users",
+      required: true,
+    },
+    fullName: {
       type: String,
       required: true,
       unique: true,
     },
-    ref_id: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "refname",
-      required: true,
-    },
-    introduction: {
+    address: {
       type: String,
       required: true,
     },
-
-    quote: {
-      type: String,
-      required: true,
-    },
-    conclusion: {
-      type: String,
-      required: true,
-    },
-
-    thumbnail: FileSchema,
-    keywords: [String],
   },
   {
     timestamps: true,
@@ -46,4 +35,4 @@ export const salesmenSchema = new Schema(
 
 const Salesman = model("salesmen", salesmenSchema);
 
-export default Salesman;
+module.exports = Salesman;
