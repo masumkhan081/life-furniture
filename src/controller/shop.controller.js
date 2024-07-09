@@ -1,5 +1,6 @@
 const shopServices = require("../services/shop.service");
 const httpStatus = require("http-status");
+const { getSearchAndPagination } = require("../utils/pagination");
 
 async function createShop(req, res) {
   const result = await shopServices.createShop(req.body);
@@ -11,7 +12,17 @@ async function createShop(req, res) {
   });
 }
 async function getShops(req, res) {
-  const result = await shopServices.getShops();
+  // pagination check & logic
+
+  const { currentPage, searchTerm, viewLimit, viewSkip } =
+    getSearchAndPagination(req.query);
+
+  const result = await shopServices.getShops({
+    currentPage,
+    searchTerm,
+    viewLimit,
+    viewSkip,
+  });
   res.send({
     statusCode: httpStatus.OK,
     success: true,
@@ -19,7 +30,7 @@ async function getShops(req, res) {
     data: result,
   });
 }
-async function updateShop(req, res) { 
+async function updateShop(req, res) {
   const result = await shopServices.updateShop({
     id: req.params.id,
     data: req.body,

@@ -1,3 +1,7 @@
+const paginationFields = ["page", "limit", "sortBy", "sortOrder"];
+const defaultViewLimit = 10;
 
-const paginationFields = ["page", "limit", "sortBy", "sortOrder"]; 
-const viewLimit = 10;
+module.exports = {
+  paginationFields,
+  defaultViewLimit,
+};
