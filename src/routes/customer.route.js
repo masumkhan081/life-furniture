@@ -2,9 +2,9 @@ const { Router } = require("express");
 const router = Router();
 const customerController = require("../controller/customer.controller.js");
 
-router.post("/", customerController.createClient);
-router.get("/", customerController.getClients);
-router.patch("/:id", customerController.updateClient);
-router.delete("/:id", customerController.deleteClient);
+router.post("/", customerController.createCustomer);
+router.get("/", customerController.getCustomers);
+router.patch("/:id", customerController.updateCustomer);
+router.delete("/:id", customerController.deleteCustomer);
 
 module.exports = router;

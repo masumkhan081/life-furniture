@@ -12,6 +12,8 @@ const userSchema = new Schema(
     password: { type: String, required: true },
     role: { type: String, required: true },
     profilePicture: { type: String },
+    isVerified: { type: Boolean, default: false },
+    isActive: { type: Boolean, default: true },
   },
   {
     timestamps: true,

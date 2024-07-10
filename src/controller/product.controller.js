@@ -1,13 +1,61 @@
+const productService = require("../services/product.service");
+const httpStatus = require("http-status");
 
+async function createProduct(req, res) {
+  const result = await productService.createProduct(req.body);
+  res.send({
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Product Created successfully",
+    data: result,
+  });
+}
 
+async function getProducts(req, res) {
+  // pagination check & logic
+  const { currentPage, searchTerm, viewLimit, viewSkip } = req.query;
 
+  const result = await productService.getProducts({
+    currentPage,
+    searchTerm,
+    viewLimit,
+    viewSkip,
+  });
 
-
-const ClientService = require("../services/client.service");
-
-async function  createClient(req, res) {}
-async function  getClients(req, res) {}
-async function  updateClients(req, res) {}
-async function  deleteClient(req, res) {}
-
-module.exports = { createClient, updateClients, deleteClient, getClients };
+  res.send({
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Products fetched successfully",
+    data: result,
+  });
+}
+//
+async function updateProduct(req, res) {
+  const result = await productService.updateProduct({
+    id: req.params.id,
+    data: req.body,
+  });
+  res.send({
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Product updated successfully",
+    data: result,
+  });
+}
+//
+async function deleteProduct(req, res) {
+  const result = await productService.deleteProduct(req.params.id);
+  res.send({
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Product deleted successfully",
+    data: result,
+  });
+}
+//
+module.exports = {
+  createProduct,
+  updateProduct,
+  deleteProduct,
+  getProducts,
+};

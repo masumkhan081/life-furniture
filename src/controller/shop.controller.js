@@ -12,8 +12,8 @@ async function createShop(req, res) {
   });
 }
 async function getShops(req, res) {
+  
   // pagination check & logic
-
   const { currentPage, searchTerm, viewLimit, viewSkip } =
     getSearchAndPagination(req.query);
 

@@ -1,20 +1,57 @@
-const clientModel = require("../models/customer.model");
+const customerModel = require("../models/customer.model");
 
-async function createClient(data) {
-  const addResult = await clientModel.create(data);
+async function createCustomer(data) {
+  const addResult = await customerModel.create(data);
   return addResult;
 }
-async function getClients() {
-  const fetchResult = await clientModel.find();
-  return fetchResult;
+//
+async function getCustomers({
+  currentPage,
+  searchTerm,
+  viewLimit,
+  viewSkip,
+  sortBy,
+  sortOrder,
+}) {
+  const fetchResult = await customerModel
+    .find({
+      title: { $regex: new RegExp(searchTerm, "i") },
+    })
+    .skip(viewSkip)
+    .limit(viewLimit);
+
+  const total = await customerModel.countDocuments({
+    title: { $regex: new RegExp(searchTerm, "i") },
+  });
+
+  return {
+    meta: {
+      total,
+      limit: viewLimit,
+      page: currentPage,
+      skip: viewSkip,
+      sortBy,
+      sortOrder,
+    },
+    data: fetchResult,
+  };
 }
-async function updateClients({ id, data }) {
-  const editResult = await clientModel.findByIdAndUpdate(id, data);
+//
+async function updateCustomer({ id, data }) {
+  const editResult = await customerModel.findByIdAndUpdate(id, data, {
+    new: true,
+  });
   return editResult;
 }
-async function deleteClient(id) {
-  const deletionResult = await clientModel.findByIdAndDelete(id);
-  return deletionResult;
+//
+async function deleteCustomer(id) {
+  const deleteResult = await customerModel.findByIdAndDelete(id);
+  return deleteResult;
 }
 
-module.exports = { createClient, updateClients, deleteClient, getClients };
+module.exports = {
+  createCustomer,
+  updateCustomer,
+  deleteCustomer,
+  getCustomers,
+};

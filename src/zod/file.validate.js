@@ -1,4 +1,4 @@
-import { z as zod } from "zod";
+const { zod } = require("zod");
 
 const fileZodSchema = zod.object({
   file_id: zod.string({
@@ -23,4 +23,4 @@ const fileZodSchema = zod.object({
   }),
 });
 
-module.exports =  fileZodSchema;
+module.exports = fileZodSchema;

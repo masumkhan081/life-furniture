@@ -1,11 +1,11 @@
-const shopModel = require("../models/shop.model");
+const productModel = require("../models/product.model");
 
-async function createShop(data) {
-  const addResult = await shopModel.create(data);
+async function createProduct(data) {
+  const addResult = await productModel.create(data);
   return addResult;
 }
-
-async function getShops({
+//
+async function getProducts({
   currentPage,
   searchTerm,
   viewLimit,
@@ -13,14 +13,14 @@ async function getShops({
   sortBy,
   sortOrder,
 }) {
-  const fetchResult = await shopModel
+  const fetchResult = await productModel
     .find({
       title: { $regex: new RegExp(searchTerm, "i") },
     })
     .skip(viewSkip)
     .limit(viewLimit);
 
-  const total = await shopModel.countDocuments({
+  const total = await productModel.countDocuments({
     title: { $regex: new RegExp(searchTerm, "i") },
   });
 
@@ -36,18 +36,22 @@ async function getShops({
     data: fetchResult,
   };
 }
-async function updateShop({ id, data }) {
-  const editResult = await shopModel.findByIdAndUpdate(id, data, { new: true });
+//
+async function updateProduct({ id, data }) {
+  const editResult = await productModel.findByIdAndUpdate(id, data, {
+    new: true,
+  });
   return editResult;
 }
-async function deleteShop(id) {
-  const deleteResult = await shopModel.findByIdAndDelete(id);
+//
+async function deleteProduct(id) {
+  const deleteResult = await productModel.findByIdAndDelete(id);
   return deleteResult;
 }
 
 module.exports = {
-  createShop,
-  updateShop,
-  deleteShop,
-  getShops,
+  createProduct,
+  updateProduct,
+  deleteProduct,
+  getProducts,
 };
