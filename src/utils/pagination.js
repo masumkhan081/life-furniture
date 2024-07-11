@@ -44,15 +44,15 @@ function getSearchAndPagination(query) {
   } else {
     for (let i = 0; i < address_searchables.length; i++) {
       filterData = query[address_searchables[i]];
-      console.log(address_searchables[i] + ": " + filterData);
-      if (filterData !== undefined || filterData !== "") {
+      if (filterData !== undefined && filterData !== "") {
         filterConditions[address_searchables[i]] = filterData;
       }
     }
-    filterConditions[searchBy] = { $regex: new RegExp(searchTerm, "i") };
-  }
+    console.log(JSON.stringify(filterConditions));
 
-  console.log("filterConditions:: " + JSON.stringify(filterConditions));
+    filterConditions[searchBy] = { $regex: new RegExp(searchTerm, "i") };
+    console.log(JSON.stringify(filterConditions)+searchTerm);
+  }
 
   return {
     currentPage,
@@ -65,4 +65,4 @@ function getSearchAndPagination(query) {
   };
 }
 
-module.exports = { getSearchAndPagination };
+module.exports =  getSearchAndPagination ;
