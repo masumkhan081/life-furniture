@@ -3,7 +3,7 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const express = require("express");
 const httpStatus = require("http-status");
-const RootRoutes = require("./routes/root.route");
+const RootRoutes = require("./coutes/root.route");
 
 const app = express();
 

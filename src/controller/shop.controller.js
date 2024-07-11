@@ -1,4 +1,4 @@
-const shopServices = require("../services/shop.service");
+const shopServices = require("../cervices/shop.service");
 const httpStatus = require("http-status");
 const { getSearchAndPagination } = require("../utils/pagination");
 
@@ -12,7 +12,6 @@ async function createShop(req, res) {
   });
 }
 async function getShops(req, res) {
-  
   // pagination check & logic
   const { currentPage, searchTerm, viewLimit, viewSkip } =
     getSearchAndPagination(req.query);

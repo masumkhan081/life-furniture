@@ -79,7 +79,7 @@ function getResetLink(user) {
       email: user.email,
       expireAt: new Date().getTime() + 5 * 60000,
     },
-    tokenSecret
+    config.tkn_secret
   )}`;
 }
 
@@ -106,7 +106,7 @@ const getTransporter = () =>
     port: 465,
     secure: true,
     auth: {
-      user: config.,
+      user: config.host_email,
       pass: config.PASS,
     },
     tls: {
@@ -122,7 +122,7 @@ const getOtpToken = ({ otp, email }) =>
       otp,
       expireAt: new Date().getTime() + 5 * 60000,
     }),
-    tokenSecret
+    config.tkn_secret
   ).toString();
 
 module.exports = {

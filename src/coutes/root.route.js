@@ -3,6 +3,7 @@ const ClientRoutes = require("./customer.route");
 const shopRoutes = require("./shop.route");
 const productRoutes = require("./product.route");
 const userRoutes = require("./user.route");
+const addressRoutes = require("./address.route");
 
 const router = Router();
 
@@ -22,6 +23,10 @@ const routes = [
   {
     path: "/shops",
     route: shopRoutes,
+  },
+  {
+    path: "/addresses",
+    route: addressRoutes,
   },
 ];
 

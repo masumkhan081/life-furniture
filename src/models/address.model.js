@@ -2,26 +2,25 @@
 const { Schema, model } = require("mongoose");
 const mongoose = require("mongoose");
 
-const customerSchema = new Schema(
+const addressSchema = new Schema(
   {
-    fullName: {
+    district: {
       type: String,
       required: true,
-      unique: true,
     },
-    phone: {
+    sub_district: {
       type: String,
       required: true,
-      unique: true,
     },
-    mobile: {
+    village: {
+      type: String,
+    },
+    street: {
       type: String,
       required: true,
-      unique: true,
     },
-    address_info: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "addresses",
+    building: {
+      type: String,
       required: true,
     },
   },
@@ -32,6 +31,6 @@ const customerSchema = new Schema(
   }
 );
 
-const customerModel = model("customers", customerSchema);
+const Address = model("addresses", addressSchema);
 
-module.exports = customerModel;
+module.exports = Address;

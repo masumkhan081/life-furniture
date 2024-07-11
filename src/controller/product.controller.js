@@ -1,4 +1,4 @@
-const productService = require("../services/product.service");
+const productService = require("../cervices/product.service");
 const httpStatus = require("http-status");
 
 async function createProduct(req, res) {

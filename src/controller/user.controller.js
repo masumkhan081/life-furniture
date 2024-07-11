@@ -1,4 +1,4 @@
-const userService = require("../services/user.service");
+const userService = require("../cervices/user.service");
 const httpStatus = require("http-status");
 const config = require("../config");
 const userModel = require("../models/user.model");
@@ -39,7 +39,7 @@ async function login(req, res) {
   const { username, password } = req.body;
   // validation to be placed here
 
-  const result = await userService.login({ res,username, password });
+  const result = await userService.login({ res, username, password });
   res.send({
     statusCode: httpStatus.OK,
     success: true,

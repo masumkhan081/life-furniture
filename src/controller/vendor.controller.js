@@ -1,4 +1,4 @@
-const userService = require("../services/vendor.service");
+const userService = require("../cervices/vendor.service");
 const httpStatus = require("http-status");
 
 async function createUser(req, res) {

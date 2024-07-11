@@ -1,4 +1,4 @@
-const salesmenService = require("../services/salesman.service");
+const salesmenService = require("../cervices/salesman.service");
 
 async function createClient(req, res) {
   const result = await salesmenService.createSalesman(req.body);

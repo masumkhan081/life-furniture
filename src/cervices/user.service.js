@@ -1,6 +1,9 @@
+/* eslint-disable no-unused-vars */
 const userModel = require("../models/user.model");
 const bcrypt = require("bcrypt");
 const mailService = require("../utils/mail");
+const config = require("../config");
+const httpStatus = require("http-status");
 
 async function createUser({ res, username, email, phone, password }) {
   // already registered or not
@@ -67,7 +70,7 @@ async function deleteUser(id) {
   return deleteResult;
 }
 
-async function login({res, username, password }) {
+async function login({ res, username, password }) {
   // registered or not
   const user = await userModel.findOne({ username });
 
@@ -80,7 +83,7 @@ async function login({res, username, password }) {
         res
           .status(200)
           .cookie(
-            tokenHeaderKey,
+            config.tkn_header_key,
             JSON.stringify({
               id: user.id,
             }),
@@ -117,82 +120,63 @@ async function login({res, username, password }) {
 }
 
 async function logout(req, res) {
-  res.clearCookie(tokenHeaderKey);
+  res.clearCookie(config.tkn_header_key);
   res.status(200).send("Dick Pulled Out Succesfully");
 }
 
 async function sendResetMail(req, res) {
   // destructuring the expected
   const { email } = req.body;
-  const result = await userService.sendResetMail(email);
+  // const result = await mailService.sendResetMail(email);
 
   res.send({
     statusCode: httpStatus.OK,
     success: true,
     message: "Successfully sent the reset mail to user email",
-    data: result,
+    data: "result",
   });
 }
 
 async function resetPw(req, res) {
   const token = req.params.token;
-  const result = await userService.resetPw(token);
+  // const result = await userService.resetPw(token);
   res.send({
     statusCode: httpStatus.OK,
     success: true,
     message: "Successfully sent the reset mail to user email",
-    data: result,
+    data: "result",
   });
 }
 
 async function updatePw(req, res) {
-  const result = await userService.updatePw(req.body);
+  // const result = await userService.updatePw(req.body);
   res.send({
     statusCode: httpStatus.OK,
     success: true,
     message: "Successfully updated the user password",
-    data: result,
+    data: "result",
   });
 }
 async function sendOTPToEmail(req, res) {
-  const { email } = req.body;
+  // const { email } = req.body;
 
-  const result = await userService.sendOTPToEmail(email);
+  // const result = await userService.sendOTPToEmail(email);
   res.send({
     statusCode: httpStatus.OK,
     success: true,
     message: "No Registered User With This Mail",
-    data: result,
+    data: "result",
   });
 }
 async function validateEmail(req, res) {
-  const { email, otp, token } = req.body;
-  const result = await userService.validateEmail({ email, otp, token });
+  // const { email, otp, token } = req.body;
+  // const result = await userService.validateEmail({ email, otp, token });
 
   res.send({
     statusCode: httpStatus.OK,
     success: true,
     message: "Products fetched successfully",
-    data: result,
-  });
-}
-
-async function getUsers(req, res) {
-  // pagination check & logic
-  const { currentPage, searchTerm, viewLimit, viewSkip } = req.query;
-
-  const result = await userService.getProducts({
-    currentPage,
-    searchTerm,
-    viewLimit,
-    viewSkip,
-  });
-
-  res.send({
-    statusCode: httpStatus.OK,
-    success: true,
-    message: "Products fetched successfully",
-    data: result,
+    data: "result",
   });
 }
 
@@ -202,4 +186,10 @@ module.exports = {
   deleteUser,
   getUsers,
   login,
+  sendOTPToEmail,
+  sendResetMail,
+  validateEmail,
+  logout,
+  resetPw,
+  updatePw,
 };
