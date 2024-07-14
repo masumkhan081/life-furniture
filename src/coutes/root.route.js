@@ -1,9 +1,12 @@
 const { Router } = require("express");
 const ClientRoutes = require("./customer.route");
-const shopRoutes = require("./shop.route");
+const showroomRoutes = require("./showroom.route");
 const productRoutes = require("./product.route");
 const userRoutes = require("./user.route");
 const addressRoutes = require("./address.route");
+const customerRoutes = require("./customer.route");
+const expenseRoutes = require("./expense.route");
+const expenseCategoryRoutes = require("./expense.route");
 
 const router = Router();
 
@@ -21,12 +24,24 @@ const routes = [
     route: productRoutes,
   },
   {
-    path: "/shops",
-    route: shopRoutes,
+    path: "/showrooms",
+    route: showroomRoutes,
   },
   {
     path: "/addresses",
     route: addressRoutes,
+  },
+  {
+    path: "/customers",
+    route: customerRoutes,
+  },
+  {
+    path: "/expenses",
+    route: expenseRoutes,
+  },
+  {
+    path: "/expense-categories",
+    route: expenseCategoryRoutes,
   },
 ];
 

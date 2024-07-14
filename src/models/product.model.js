@@ -11,29 +11,27 @@ const mongoose = require("mongoose");
 
 const productSchema = new Schema(
   {
+    product_id: String,
     title: {
       type: String,
       required: true,
       unique: true,
     },
-    ref_id: {
+    category: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "refname",
+      ref: "categories",
       required: true,
     },
-    introduction: {
+    detail: {
       type: String,
       required: true,
     },
-    quote: {
+    size: {
       type: String,
       required: true,
     },
-    conclusion: {
-      type: String,
-      required: true,
-    },
-    keywords: [String],
+    images: [String],
+    slugs: [String],
   },
   {
     timestamps: true,
@@ -42,6 +40,6 @@ const productSchema = new Schema(
   }
 );
 
-const productModel = model("products", productSchema);
+const Product = model("products", productSchema);
 
-module.exports = productModel;
+module.exports = Product;

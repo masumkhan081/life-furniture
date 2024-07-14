@@ -1,23 +1,23 @@
 const { Schema, model } = require("mongoose");
 const mongoose = require("mongoose");
 
-const salesmenSchema = new Schema(
+const stockSchema = new Schema(
   {
-    userInfo: {
+    showroom: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "users",
+      ref: "showrooms",
       required: true,
     },
-    full_name: {
-      type: String,
-      required: true,
-      unique: true,
-    },
-    mobile: { type: String, required: false },
-    address: {
-      type: String,
+    product: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "products",
       required: true,
     },
+    quantity: {
+      type: Number,
+      required: true,
+    },
+    note: String,
   },
   {
     timestamps: true,
@@ -26,6 +26,6 @@ const salesmenSchema = new Schema(
   }
 );
 
-const Salesman = model("salesmen", salesmenSchema);
+const productModel = model("stock", stockSchema);
 
-module.exports = Salesman;
+module.exports = productModel;

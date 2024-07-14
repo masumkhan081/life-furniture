@@ -1,11 +1,8 @@
 const CustomerService = require("../cervices/customer.service");
 const httpStatus = require("http-status");
 
-async function createCustomer(req, res) {
+async function createExpense(req, res) {
   const result = await CustomerService.createCustomer(req.body);
-
-  console.log(">> " + JSON.stringify(result));
-
   res.send({
     statusCode: httpStatus.OK,
     success: true,
@@ -13,7 +10,7 @@ async function createCustomer(req, res) {
     data: result,
   });
 }
-async function getCustomers(req, res) {
+async function getExpenses(req, res) {
   // pagination check & logic
   const { currentPage, searchTerm, viewLimit, viewSkip } = req.query;
 
@@ -32,7 +29,7 @@ async function getCustomers(req, res) {
   });
 }
 //
-async function updateCustomer(req, res) {
+async function updateExpense(req, res) {
   const result = await CustomerService.updateCustomer({
     id: req.params.id,
     data: req.body,
@@ -45,7 +42,7 @@ async function updateCustomer(req, res) {
   });
 }
 //
-async function deleteCustomer(req, res) {
+async function deleteExpense(req, res) {
   const result = await CustomerService.deleteCustomer(req.params.id);
   res.send({
     statusCode: httpStatus.OK,
@@ -56,8 +53,8 @@ async function deleteCustomer(req, res) {
 }
 //
 module.exports = {
-  createCustomer,
-  updateCustomer,
-  deleteCustomer,
-  getCustomers,
+  createExpense,
+  updateExpense,
+  deleteExpense,
+  getExpenses,
 };

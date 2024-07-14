@@ -1,7 +1,7 @@
 const { Schema, model } = require("mongoose");
 // const mongoose = require("mongoose");
 
-const saleSchema = new Schema(
+const deliverySchema = new Schema(
   {
     products: [
       {
@@ -14,6 +14,16 @@ const saleSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "customers",
       required: true,
+    },
+    quantity: {
+      type: Number,
+      required: true,
+      min: 1,
+    },
+    discount: {
+      type: Number,
+      default: 0,
+      required: false,
     },
     total_price: {
       type: Number,
@@ -32,6 +42,6 @@ const saleSchema = new Schema(
   }
 );
 
-const saleModel = model("sales", saleSchema);
+const Delivery = model("deliveries", deliverySchema);
 
-module.exports = saleModel;
+module.exports = Delivery;

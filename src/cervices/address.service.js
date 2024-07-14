@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 const addressModel = require("../models/address.model");
-const  getSearchAndPagination  = require("../utils/pagination");
+const getSearchAndPagination = require("../utils/pagination");
 
 async function createAddress(data) {
   // const addResult = await addressModel.create(data);
@@ -10,39 +10,16 @@ async function createAddress(data) {
 }
 //
 async function getAddresses(query) {
-  const {
-    currentPage,
-    searchTerm,
-    viewLimit,
-    viewSkip,
-    filterConditions,
-    sortConditions,
-    searchConditions,
-  } = getSearchAndPagination(query);
+  const { currentPage, viewLimit, viewSkip, filterConditions } =
+    getSearchAndPagination(query);
   const { sortBy, sortOrder } = query;
 
-
-  console.log("bug test ");
-  const fetchResult1 = await addressModel
+  const fetchResult = await addressModel
     .find(filterConditions)
     .skip(viewSkip)
     .limit(viewLimit);
 
-  const fl2 = {
-    district: "Barguna",
-    building: { $regex: new RegExp(searchTerm, "i") },
-  };
-
-  const fetchResult2 = await addressModel
-    .find(fl2)
-    .skip(viewSkip)
-    .limit(viewLimit);
-
-  console.log(
-    // JSON.stringify(fl2) + "  :: << >>   :: " + JSON.stringify(filterConditions)
-  );
-
-  const total = await addressModel.countDocuments(fl2);
+  const total = await addressModel.countDocuments(filterConditions);
   return {
     meta: {
       total,
@@ -52,8 +29,7 @@ async function getAddresses(query) {
       sortBy,
       sortOrder,
     },
-    data1: fetchResult1,
-    data2: fetchResult2,
+    data: fetchResult,
   };
 }
 //

@@ -35,6 +35,6 @@ const orderSchema = new Schema(
   }
 );
 
-const orderModel = model("orders", orderSchema);
+const Order = model("orders", orderSchema);
 
-module.exports = orderModel;
+module.exports = Order;

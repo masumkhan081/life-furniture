@@ -13,19 +13,27 @@ const address_searchables = [
 function getSearchAndPagination(query) {
   const { search, page, limit, search_by } = query;
 
+  // page-number - pagination field
   const currentPage = page === "" ? 1 : page === undefined ? 1 : page;
-  const searchTerm =
-    search === "" ? search : search === undefined ? "" : search;
+
+  // limit - pagination field
   const viewLimit =
     limit === ""
       ? defaultViewLimit
       : limit === undefined
       ? defaultViewLimit
       : limit;
+
+  // skip  - pagination field
   const viewSkip = viewLimit * (currentPage - 1);
 
+  // what fild to be searched on
   const searchBy =
     search_by === undefined ? "whole" : search_by === "" ? "whole" : search_by;
+
+  // what to be searched by
+  const searchTerm =
+    search === "" ? search : search === undefined ? "" : search;
 
   let searchConditions = [];
   let filterConditions = {};
@@ -48,10 +56,10 @@ function getSearchAndPagination(query) {
         filterConditions[address_searchables[i]] = filterData;
       }
     }
-    console.log(JSON.stringify(filterConditions));
 
     filterConditions[searchBy] = { $regex: new RegExp(searchTerm, "i") };
-    console.log(JSON.stringify(filterConditions)+searchTerm);
+    // console.log(JSON.stringify(filterConditions) + searchTerm);
+    
   }
 
   return {
@@ -65,4 +73,4 @@ function getSearchAndPagination(query) {
   };
 }
 
-module.exports =  getSearchAndPagination ;
+module.exports = getSearchAndPagination;

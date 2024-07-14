@@ -7,19 +7,16 @@ const customerSchema = new Schema(
     fullName: {
       type: String,
       required: true,
-      unique: true,
     },
     phone: {
       type: String,
       required: true,
-      unique: true,
     },
     mobile: {
       type: String,
       required: true,
-      unique: true,
     },
-    address_info: {
+    address: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "addresses",
       required: true,
@@ -32,6 +29,6 @@ const customerSchema = new Schema(
   }
 );
 
-const customerModel = model("customers", customerSchema);
+const Customer = model("customers", customerSchema);
 
-module.exports = customerModel;
+module.exports = Customer;
