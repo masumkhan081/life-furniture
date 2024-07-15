@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const router = Router();
-const customerController = require("../controller/customer.controller.js");
+const customerController = require("../controller/customer.controller");
 
 router.post("/", customerController.createCustomer);
 router.get("/", customerController.getCustomers);

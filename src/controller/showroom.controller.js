@@ -2,21 +2,21 @@ const showroomServices = require("../cervices/showroom.service");
 const httpStatus = require("http-status");
 const { getSearchAndPagination } = require("../utils/pagination");
 
-async function createshowroom(req, res) {
-  const result = await showroomServices.createshowroom(req.body);
+async function createShowroom(req, res) {
+  const result = await showroomServices.createShowroom(req.body);
   res.send({
-    statusCode: httpStatus.OK,
-    success: true,
-    message: "showroom Created successfully",
-    data: result,
+    statusCode: result.success === true ? httpStatus.OK : httpStatus[409],
+    success: result.success,
+    message: result.msg,
+    data: result.data,
   });
 }
-async function getshowrooms(req, res) {
+async function getShowrooms(req, res) {
   // pagination check & logic
   const { currentPage, searchTerm, viewLimit, viewSkip } =
     getSearchAndPagination(req.query);
 
-  const result = await showroomServices.getshowrooms({
+  const result = await showroomServices.getShowrooms({
     currentPage,
     searchTerm,
     viewLimit,
@@ -29,8 +29,8 @@ async function getshowrooms(req, res) {
     data: result,
   });
 }
-async function updateshowroom(req, res) {
-  const result = await showroomServices.updateshowroom({
+async function updateShowroom(req, res) {
+  const result = await showroomServices.updateShowroom({
     id: req.params.id,
     data: req.body,
   });
@@ -41,8 +41,8 @@ async function updateshowroom(req, res) {
     data: result,
   });
 }
-async function deleteshowroom(req, res) {
-  const result = await showroomServices.deleteshowroom(req.params.id);
+async function deleteShowroom(req, res) {
+  const result = await showroomServices.deleteShowroom(req.params.id);
   res.send({
     statusCode: httpStatus.OK,
     success: true,
@@ -51,4 +51,9 @@ async function deleteshowroom(req, res) {
   });
 }
 
-module.exports = { createshowroom, updateshowroom, deleteshowroom, getshowrooms };
+module.exports = {
+  createShowroom,
+  updateShowroom,
+  deleteShowroom,
+  getShowrooms,
+};

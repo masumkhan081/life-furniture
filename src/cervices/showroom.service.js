@@ -1,8 +1,18 @@
 const Showroom = require("../models/showroom.model");
+const { success_msg, err_msg } = require("../config/constants");
+const { getErrorResponse } = require("../utils/responseHandler");
 
 async function createShowroom(data) {
-  const addResult = await Showroom.create(data);
-  return addResult;
+  try {
+    const addResult = await Showroom.create(data);
+    return {
+      success: true,
+      msg: success_msg.create("Showroom"),
+      data: addResult,
+    };
+  } catch (error) {
+    return getErrorResponse(error);
+  }
 }
 //
 async function getShowrooms({

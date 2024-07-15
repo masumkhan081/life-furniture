@@ -1,6 +1,6 @@
 /* eslint-disable no-empty */
 const Customer = require("../models/customer.model");
-const customerCreationSchema = require("../zod/customer.validate");
+const customerCreationSchema = require("../validation/customer.validate");
 const Address = require("../models/address.model");
 
 async function createCustomer(data) {

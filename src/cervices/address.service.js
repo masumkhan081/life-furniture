@@ -14,8 +14,7 @@ async function getAddresses(query) {
     getSearchAndPagination(query);
   const { sortBy, sortOrder } = query;
 
-  const fetchResult = await Address
-    .find(filterConditions)
+  const fetchResult = await Address.find(filterConditions)
     .skip(viewSkip)
     .limit(viewLimit);
 
