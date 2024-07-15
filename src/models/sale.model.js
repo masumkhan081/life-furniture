@@ -32,6 +32,6 @@ const saleSchema = new Schema(
   }
 );
 
-const saleModel = model("sales", saleSchema);
+const Sale = model("sales", saleSchema);
 
-module.exports = saleModel;
+module.exports = Sale;

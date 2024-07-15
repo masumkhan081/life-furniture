@@ -1,11 +1,11 @@
-const productModel = require("../models/product.model");
+const Showroom = require("../models/showroom.model");
 
-async function createProduct(data) {
-  const addResult = await productModel.create(data);
+async function createShowroom(data) {
+  const addResult = await Showroom.create(data);
   return addResult;
 }
 //
-async function getProducts({
+async function getShowrooms({
   currentPage,
   searchTerm,
   viewLimit,
@@ -13,14 +13,13 @@ async function getProducts({
   sortBy,
   sortOrder,
 }) {
-  const fetchResult = await productModel
-    .find({
-      title: { $regex: new RegExp(searchTerm, "i") },
-    })
+  const fetchResult = await Showroom.find({
+    title: { $regex: new RegExp(searchTerm, "i") },
+  })
     .skip(viewSkip)
     .limit(viewLimit);
 
-  const total = await productModel.countDocuments({
+  const total = await Showroom.countDocuments({
     title: { $regex: new RegExp(searchTerm, "i") },
   });
 
@@ -37,21 +36,21 @@ async function getProducts({
   };
 }
 //
-async function updateProduct({ id, data }) {
-  const editResult = await productModel.findByIdAndUpdate(id, data, {
+async function updateShowroom({ id, data }) {
+  const editResult = await Showroom.findByIdAndUpdate(id, data, {
     new: true,
   });
   return editResult;
 }
 //
-async function deleteProduct(id) {
-  const deleteResult = await productModel.findByIdAndDelete(id);
+async function deleteShowroom(id) {
+  const deleteResult = await Showroom.findByIdAndDelete(id);
   return deleteResult;
 }
 
 module.exports = {
-  createProduct,
-  updateProduct,
-  deleteProduct,
-  getProducts,
+  createShowroom,
+  updateShowroom,
+  deleteShowroom,
+  getShowrooms,
 };

@@ -1,11 +1,11 @@
 /* eslint-disable no-unused-vars */
-const addressModel = require("../models/address.model");
+const Address = require("../models/address.model");
 const getSearchAndPagination = require("../utils/pagination");
 
 async function createAddress(data) {
   // const addResult = await addressModel.create(data);
 
-  const addBulkResult = await addressModel.insertMany(data);
+  const addBulkResult = await Address.insertMany(data);
   return addBulkResult;
 }
 //
@@ -14,12 +14,12 @@ async function getAddresses(query) {
     getSearchAndPagination(query);
   const { sortBy, sortOrder } = query;
 
-  const fetchResult = await addressModel
+  const fetchResult = await Address
     .find(filterConditions)
     .skip(viewSkip)
     .limit(viewLimit);
 
-  const total = await addressModel.countDocuments(filterConditions);
+  const total = await Address.countDocuments(filterConditions);
   return {
     meta: {
       total,
@@ -34,14 +34,14 @@ async function getAddresses(query) {
 }
 //
 async function updateAddress({ id, data }) {
-  const editResult = await addressModel.findByIdAndUpdate(id, data, {
+  const editResult = await Address.findByIdAndUpdate(id, data, {
     new: true,
   });
   return editResult;
 }
 //
 async function deleteAddress(id) {
-  const deleteResult = await addressModel.findByIdAndDelete(id);
+  const deleteResult = await Address.findByIdAndDelete(id);
   return deleteResult;
 }
 

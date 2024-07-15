@@ -1,7 +1,7 @@
-const productModel = require("../models/product.model");
+const Stock = require("../models/stock.model");
 
 async function createProduct(data) {
-  const addResult = await productModel.create(data);
+  const addResult = await Stock.create(data);
   return addResult;
 }
 //
@@ -13,14 +13,13 @@ async function getProducts({
   sortBy,
   sortOrder,
 }) {
-  const fetchResult = await productModel
-    .find({
-      title: { $regex: new RegExp(searchTerm, "i") },
-    })
+  const fetchResult = await Stock.find({
+    title: { $regex: new RegExp(searchTerm, "i") },
+  })
     .skip(viewSkip)
     .limit(viewLimit);
 
-  const total = await productModel.countDocuments({
+  const total = await Stock.countDocuments({
     title: { $regex: new RegExp(searchTerm, "i") },
   });
 
@@ -38,14 +37,14 @@ async function getProducts({
 }
 //
 async function updateProduct({ id, data }) {
-  const editResult = await productModel.findByIdAndUpdate(id, data, {
+  const editResult = await Stock.findByIdAndUpdate(id, data, {
     new: true,
   });
   return editResult;
 }
 //
 async function deleteProduct(id) {
-  const deleteResult = await productModel.findByIdAndDelete(id);
+  const deleteResult = await Stock.findByIdAndDelete(id);
   return deleteResult;
 }
 

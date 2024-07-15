@@ -20,6 +20,6 @@ const showroomSchema = new Schema(
   }
 );
 
-const showroomModel = model("showrooms", showroomSchema);
+const Showroom = model("showrooms", showroomSchema);
 
-module.exports = showroomModel;
+module.exports = Showroom;

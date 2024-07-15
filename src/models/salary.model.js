@@ -36,6 +36,6 @@ const salarySchema = new Schema(
   }
 );
 
-const salaryModel = model("salaries", salarySchema);
+const Salary = model("salaries", salarySchema);
 
-module.exports = salaryModel;
+module.exports = Salary;

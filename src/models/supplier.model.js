@@ -34,6 +34,6 @@ const supplierSchema = new Schema(
   }
 );
 
-const supplierModel = model("suppliers", supplierSchema);
+const Supplier = model("suppliers", supplierSchema);
 
-module.exports = supplierModel;
+module.exports = Supplier;

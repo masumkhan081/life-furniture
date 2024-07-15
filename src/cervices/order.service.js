@@ -1,11 +1,11 @@
-const productModel = require("../models/product.model");
+const Order = require("../models/order.model");
 
-async function createProduct(data) {
-  const addResult = await productModel.create(data);
+async function createOrder(data) {
+  const addResult = await Order.create(data);
   return addResult;
 }
 //
-async function getProducts({
+async function getOrders({
   currentPage,
   searchTerm,
   viewLimit,
@@ -13,14 +13,14 @@ async function getProducts({
   sortBy,
   sortOrder,
 }) {
-  const fetchResult = await productModel
+  const fetchResult = await Order
     .find({
       title: { $regex: new RegExp(searchTerm, "i") },
     })
     .skip(viewSkip)
     .limit(viewLimit);
 
-  const total = await productModel.countDocuments({
+  const total = await Order.countDocuments({
     title: { $regex: new RegExp(searchTerm, "i") },
   });
 
@@ -37,21 +37,21 @@ async function getProducts({
   };
 }
 //
-async function updateProduct({ id, data }) {
-  const editResult = await productModel.findByIdAndUpdate(id, data, {
+async function updateOrder({ id, data }) {
+  const editResult = await Order.findByIdAndUpdate(id, data, {
     new: true,
   });
   return editResult;
 }
 //
-async function deleteProduct(id) {
-  const deleteResult = await productModel.findByIdAndDelete(id);
+async function deleteOrder(id) {
+  const deleteResult = await Order.findByIdAndDelete(id);
   return deleteResult;
 }
 
 module.exports = {
-  createProduct,
-  updateProduct,
-  deleteProduct,
-  getProducts,
+  createOrder,
+  updateOrder,
+  deleteOrder,
+  getOrders,
 };

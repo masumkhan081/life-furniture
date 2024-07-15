@@ -15,6 +15,6 @@ const waiverSchema = new Schema(
   }
 );
 
-const waiverModel = model("waivers", waiverSchema);
+const Discount = model("waivers", waiverSchema);
 
-module.exports = waiverModel;
+module.exports = Discount;

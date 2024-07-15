@@ -1,11 +1,11 @@
-const customerModel = require("../models/expenditu");
+const OrderDelivery = require("../models/delivery.model");
 
-async function createCustomer(data) {
-  const addResult = await customerModel.create(data);
+async function createOrderDelivery(data) {
+  const addResult = await OrderDelivery.create(data);
   return addResult;
 }
 //
-async function getCustomers({
+async function getOrderDeliveries({
   currentPage,
   searchTerm,
   viewLimit,
@@ -13,14 +13,13 @@ async function getCustomers({
   sortBy,
   sortOrder,
 }) {
-  const fetchResult = await customerModel
-    .find({
-      title: { $regex: new RegExp(searchTerm, "i") },
-    })
+  const fetchResult = await OrderDelivery.find({
+    title: { $regex: new RegExp(searchTerm, "i") },
+  })
     .skip(viewSkip)
     .limit(viewLimit);
 
-  const total = await customerModel.countDocuments({
+  const total = await OrderDelivery.countDocuments({
     title: { $regex: new RegExp(searchTerm, "i") },
   });
 
@@ -37,21 +36,21 @@ async function getCustomers({
   };
 }
 //
-async function updateCustomer({ id, data }) {
-  const editResult = await customerModel.findByIdAndUpdate(id, data, {
+async function updateOrderDelivery({ id, data }) {
+  const editResult = await OrderDelivery.findByIdAndUpdate(id, data, {
     new: true,
   });
   return editResult;
 }
 //
-async function deleteCustomer(id) {
-  const deleteResult = await customerModel.findByIdAndDelete(id);
+async function deleteOrderDelivery(id) {
+  const deleteResult = await OrderDelivery.findByIdAndDelete(id);
   return deleteResult;
 }
 
 module.exports = {
-  createCustomer,
-  updateCustomer,
-  deleteCustomer,
-  getCustomers,
+  createOrderDelivery,
+  updateOrderDelivery,
+  deleteOrderDelivery,
+  getOrderDeliveries,
 };

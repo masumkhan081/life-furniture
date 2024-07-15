@@ -1,16 +1,54 @@
-const salesmenService = require("../cervices/salesman.service");
+const addressService = require("../cervices/address.service");
+const httpStatus = require("http-status");
 
-async function createClient(req, res) {
-  const result = await salesmenService.createSalesman(req.body);
+async function createAddress(req, res) {
+  const result = await addressService.createAddress(req.body);
   res.send({
     statusCode: httpStatus.OK,
     success: true,
-    message: "Client Created successfully",
+    message: "Address created successfully",
     data: result,
   });
 }
-async function getClients(req, res) {}
-async function updateClients(req, res) {}
-async function deleteClient(req, res) {}
+async function getAddresses(req, res) {
+  // pagination check & logic
 
-module.exports = { createClient, updateClients, deleteClient, getClients };
+  const result = await addressService.getAddresses(req.query);
+
+  res.send({
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Addresses fetched successfully",
+    data: result,
+  });
+}
+//
+async function updateAddress(req, res) {
+  const result = await addressService.updateAddress({
+    id: req.params.id,
+    data: req.body,
+  });
+  res.send({
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Address updated successfully",
+    data: result,
+  });
+}
+//
+async function deleteAddress(req, res) {
+  const result = await addressService.deleteAddress(req.params.id);
+  res.send({
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Address deleted successfully",
+    data: result,
+  });
+}
+//
+module.exports = {
+  createAddress,
+  updateAddress,
+  deleteAddress,
+  getAddresses,
+};

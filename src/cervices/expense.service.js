@@ -1,11 +1,11 @@
-const customerModel = require("../models/expenditu");
+const Expense = require("../models/expense.model");
 
-async function createCustomer(data) {
-  const addResult = await customerModel.create(data);
+async function createExpense(data) {
+  const addResult = await Expense.create(data);
   return addResult;
 }
 //
-async function getCustomers({
+async function getExpenses({
   currentPage,
   searchTerm,
   viewLimit,
@@ -13,14 +13,13 @@ async function getCustomers({
   sortBy,
   sortOrder,
 }) {
-  const fetchResult = await customerModel
-    .find({
-      title: { $regex: new RegExp(searchTerm, "i") },
-    })
+  const fetchResult = await Expense.find({
+    title: { $regex: new RegExp(searchTerm, "i") },
+  })
     .skip(viewSkip)
     .limit(viewLimit);
 
-  const total = await customerModel.countDocuments({
+  const total = await Expense.countDocuments({
     title: { $regex: new RegExp(searchTerm, "i") },
   });
 
@@ -37,21 +36,21 @@ async function getCustomers({
   };
 }
 //
-async function updateCustomer({ id, data }) {
-  const editResult = await customerModel.findByIdAndUpdate(id, data, {
+async function updateExpense({ id, data }) {
+  const editResult = await Expense.findByIdAndUpdate(id, data, {
     new: true,
   });
   return editResult;
 }
 //
-async function deleteCustomer(id) {
-  const deleteResult = await customerModel.findByIdAndDelete(id);
+async function deleteExpense(id) {
+  const deleteResult = await Expense.findByIdAndDelete(id);
   return deleteResult;
 }
 
 module.exports = {
-  createCustomer,
-  updateCustomer,
-  deleteCustomer,
-  getCustomers,
+  createExpense,
+  updateExpense,
+  deleteExpense,
+  getExpenses,
 };

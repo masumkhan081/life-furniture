@@ -1,11 +1,11 @@
-const productModel = require("../models/vendor.model");
+const Supplier = require("../models/supplier.model");
 
-async function createVendor(data) {
-  const addResult = await productModel.create(data);
+async function createSupplier(data) {
+  const addResult = await Supplier.create(data);
   return addResult;
 }
 //
-async function getVendors({
+async function getSuppliers({
   currentPage,
   searchTerm,
   viewLimit,
@@ -13,14 +13,13 @@ async function getVendors({
   sortBy,
   sortOrder,
 }) {
-  const fetchResult = await productModel
-    .find({
-      title: { $regex: new RegExp(searchTerm, "i") },
-    })
+  const fetchResult = await Supplier.find({
+    title: { $regex: new RegExp(searchTerm, "i") },
+  })
     .skip(viewSkip)
     .limit(viewLimit);
 
-  const total = await productModel.countDocuments({
+  const total = await Supplier.countDocuments({
     title: { $regex: new RegExp(searchTerm, "i") },
   });
 
@@ -37,21 +36,21 @@ async function getVendors({
   };
 }
 //
-async function updateVendor({ id, data }) {
-  const editResult = await productModel.findByIdAndUpdate(id, data, {
+async function updateSupplier({ id, data }) {
+  const editResult = await Supplier.findByIdAndUpdate(id, data, {
     new: true,
   });
   return editResult;
 }
 //
-async function deleteVendor(id) {
-  const deleteResult = await productModel.findByIdAndDelete(id);
+async function deleteSupplier(id) {
+  const deleteResult = await Supplier.findByIdAndDelete(id);
   return deleteResult;
 }
 
 module.exports = {
-  createVendor,
-  updateVendor,
-  deleteVendor,
-  getVendors,
+  createSupplier,
+  updateSupplier,
+  deleteSupplier,
+  getSuppliers,
 };

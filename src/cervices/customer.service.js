@@ -1,5 +1,5 @@
 /* eslint-disable no-empty */
-const customerModel = require("../models/customer.model");
+const Customer = require("../models/customer.model");
 const customerCreationSchema = require("../zod/customer.validate");
 const Address = require("../models/address.model");
 
@@ -13,14 +13,14 @@ async function createCustomer(data) {
 
     if (typeof validOrNot.address == "string") {
       console.log("if::1  ");
-      response = await customerModel.create(data);
+      response = await Customer.create(data);
       console.log("if:  res: " + JSON.stringify(response));
     } else if (typeof validOrNot.address == "object") {
       console.log("else::1  ");
       const addressResult = await Address.create(validOrNot.address);
       console.log("else: res:" + JSON.stringify(addressResult));
       validOrNot.address = addressResult._id;
-      response = await customerModel.create(validOrNot);
+      response = await Customer.create(validOrNot);
       console.log("else: res-2:" + JSON.stringify(response));
     }
 
@@ -40,14 +40,14 @@ async function getCustomers({
   sortBy,
   sortOrder,
 }) {
-  const fetchResult = await customerModel
+  const fetchResult = await Customer
     .find({
       title: { $regex: new RegExp(searchTerm, "i") },
     })
     .skip(viewSkip)
     .limit(viewLimit);
 
-  const total = await customerModel.countDocuments({
+  const total = await Customer.countDocuments({
     title: { $regex: new RegExp(searchTerm, "i") },
   });
 
@@ -65,14 +65,14 @@ async function getCustomers({
 }
 //
 async function updateCustomer({ id, data }) {
-  const editResult = await customerModel.findByIdAndUpdate(id, data, {
+  const editResult = await Customer.findByIdAndUpdate(id, data, {
     new: true,
   });
   return editResult;
 }
 //
 async function deleteCustomer(id) {
-  const deleteResult = await customerModel.findByIdAndDelete(id);
+  const deleteResult = await Customer.findByIdAndDelete(id);
   return deleteResult;
 }
 

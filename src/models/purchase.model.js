@@ -34,6 +34,6 @@ const purchaseSchema = new Schema(
   }
 );
 
-const purchaseModel = model("purchases", purchaseSchema);
+const Purchase = model("purchases", purchaseSchema);
 
-module.exports = purchaseModel;
+module.exports = Purchase;

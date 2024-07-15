@@ -1,11 +1,11 @@
-const waiverModel = require("../models/waiver.model");
+const Discount = require("../models/discount.model");
 
-async function createWaiver(data) {
-  const addResult = await waiverModel.create(data);
+async function createDiscount(data) {
+  const addResult = await Discount.create(data);
   return addResult;
 }
 
-async function getWaivers({
+async function getDiscounts({
   currentPage,
   searchTerm,
   viewLimit,
@@ -13,14 +13,14 @@ async function getWaivers({
   sortBy,
   sortOrder,
 }) {
-  const fetchResult = await waiverModel
+  const fetchResult = await Discount
     .find({
       title: { $regex: new RegExp(searchTerm, "i") },
     })
     .skip(viewSkip)
     .limit(viewLimit);
 
-  const total = await waiverModel.countDocuments({
+  const total = await Discount.countDocuments({
     title: { $regex: new RegExp(searchTerm, "i") },
   });
 
@@ -37,16 +37,16 @@ async function getWaivers({
   };
 }
 
-async function updateWaiver({ id, data }) {
-  const updateResult = await waiverModel.findByIdAndUpdate(id, data, {
+async function updateDiscount({ id, data }) {
+  const updateResult = await Discount.findByIdAndUpdate(id, data, {
     new: true,
   });
   return updateResult;
 }
 
-async function deleteWaiver(id) {
-  const deleteResult = await waiverModel.findByIdAndDelete(id);
+async function deleteDiscount(id) {
+  const deleteResult = await Discount.findByIdAndDelete(id);
   return deleteResult;
 }
 
-module.exports = { createWaiver, updateWaiver, deleteWaiver, getWaivers };
+module.exports = { createDiscount, updateDiscount, deleteDiscount, getDiscounts };
