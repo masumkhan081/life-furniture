@@ -1,9 +1,12 @@
+const httpStatus = require("http-status");
+
 function getErrorResponse(error) {
   if (error.code === 11000 || error.code === 11001) {
     // Duplicate key error
     return {
+      statusCode: httpStatus[409],
       success: false,
-      msg: err_msg.conflict("Showroom"),
+      message: err_msg.conflict("Showroom"),
     };
   }
   // Other errors

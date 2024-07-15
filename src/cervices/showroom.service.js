@@ -1,11 +1,12 @@
 const Showroom = require("../models/showroom.model");
-const { success_msg, err_msg } = require("../config/constants");
+const { success_msg, err_msg } = require("../utils/responseHandler");
 const { getErrorResponse } = require("../utils/responseHandler");
 
 async function createShowroom(data) {
   try {
     const addResult = await Showroom.create(data);
     return {
+      statusCode: 201, 
       success: true,
       msg: success_msg.create("Showroom"),
       data: addResult,

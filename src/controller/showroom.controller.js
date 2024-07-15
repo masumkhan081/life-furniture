@@ -4,12 +4,7 @@ const { getSearchAndPagination } = require("../utils/pagination");
 
 async function createShowroom(req, res) {
   const result = await showroomServices.createShowroom(req.body);
-  res.send({
-    statusCode: result.success === true ? httpStatus.OK : httpStatus[409],
-    success: result.success,
-    message: result.msg,
-    data: result.data,
-  });
+  res.send(result);
 }
 async function getShowrooms(req, res) {
   // pagination check & logic
