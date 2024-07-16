@@ -16,7 +16,7 @@ async function createOrderDelivery(data) {
     const addResult = await OrderDelivery.create(data);
     return getCreateResponse({ data: addResult, what: "Order delivery" });
   } catch (error) {
-    return getErrorResponse({error,what:operableEntities.  });
+    return getErrorResponse({error,what:operableEntities.delivery  });
   }
 }
 //
