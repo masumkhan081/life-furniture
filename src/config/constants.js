@@ -17,6 +17,7 @@ const operableEntities = {
   expense: "expense",
   expense_category: "Expense category",
   salary: "salary",
+  user: "user",
 };
 
 const paginationFields = ["page", "limit", "sortBy", "sortOrder"];

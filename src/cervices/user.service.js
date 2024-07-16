@@ -77,7 +77,7 @@ async function updateUser({ id, data }) {
     });
     return getUpdateResponse({ data: editResult, what: "User" });
   } catch (error) {
-    return getErrorResponse({error,what:operableEntities.  });
+    return getErrorResponse({error,what:operableEntities.user   });
   };
 }
 //
@@ -86,7 +86,7 @@ async function deleteUser(id) {
     const deleteResult = await userModel.findByIdAndDelete(id);
     return getDeletionResponse({ data: deleteResult, what: "User" });
   } catch (error) {
-    return getErrorResponse({error,what:operableEntities.  });
+    return getErrorResponse({error,what:operableEntities.user  });
   }
 }
 
