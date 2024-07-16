@@ -7,6 +7,7 @@ const expenseCategorySchema = new Schema(
     name: {
       type: String,
       required: true,
+      unique: true,
     },
     detail: {
       type: String,

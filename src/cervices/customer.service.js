@@ -8,9 +8,11 @@ const {
   success_msg,
   getErrorResponse,
   err_msg,
+  getCreateResponse,
   getDeletionResponse,
   getUpdateResponse,
 } = require("../utils/responseHandler");
+const { operableEntities } = require("../config/constants");
 
 async function createCustomer(data) {
   let validOrNot;
@@ -26,18 +28,18 @@ async function createCustomer(data) {
       console.log("if:  res: " + JSON.stringify(response));
     } else if (typeof validOrNot.address == "object") {
       console.log("else::1  ");
-      const addressResult = await Address.create(validOrNot.address);
-      console.log("else: res:" + JSON.stringify(addressResult));
-      validOrNot.address = addressResult._id;
+      const addAddressResult = await Address.create(validOrNot.address);
+      console.log("else: res:" + JSON.stringify(addAddressResult));
+      validOrNot.address = addAddressResult._id;
       response = await Customer.create(validOrNot);
       console.log("else: res-2:" + JSON.stringify(response));
     }
-
-    return response;
-    // console.log(JSON.stringify(validOrNot));
+    return getCreateResponse({
+      data: response,
+      what: operableEntities.customer,
+    });
   } catch (error) {
-    console.error("Validation failed for new customer:", error.message);
-    return "Validation failed";
+    return getErrorResponse({ error, what: operableEntities.customer });
   }
 }
 //
@@ -77,18 +79,24 @@ async function updateCustomer({ id, data }) {
     const editResult = await Customer.findByIdAndUpdate(id, data, {
       new: true,
     });
-    return getUpdateResponse({ data: editResult, what: "Customer" });
+    return getUpdateResponse({
+      data: editResult,
+      what: operableEntities.customer,
+    });
   } catch (error) {
-    return getErrorResponse(error);
+    return getErrorResponse({ error, what: operableEntities.customer });
   }
 }
 //
 async function deleteCustomer(id) {
   try {
     const deleteResult = await Customer.findByIdAndDelete(id);
-    return getDeletionResponse({ data: deleteResult, what: "Customer" });
+    return getDeletionResponse({
+      data: deleteResult,
+      what: operableEntities.customer,
+    });
   } catch (error) {
-    return getErrorResponse(error);
+    return getErrorResponse({ error, what: operableEntities.customer });
   }
 }
 

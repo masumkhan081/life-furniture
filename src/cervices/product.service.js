@@ -5,13 +5,19 @@ const {
   success_msg,
   getErrorResponse,
   err_msg,
+  getCreateResponse,
   getDeletionResponse,
   getUpdateResponse,
 } = require("../utils/responseHandler");
+const { operableEntities } = require("../config/constants");
 
 async function createProduct(data) {
-  const addResult = await Product.create(data);
-  return addResult;
+  try {
+    const addResult = await Product.create(data);
+    return getCreateResponse({ data: addResult, what: "Product" });
+  } catch (error) {
+    return getErrorResponse({ error, what: operableEntities.product });
+  }
 }
 //
 async function getProducts({
@@ -52,7 +58,7 @@ async function updateProduct({ id, data }) {
     });
     return getUpdateResponse({ data: editResult, what: "Product" });
   } catch (error) {
-    return getErrorResponse(error);
+    return getErrorResponse({ error, what: operableEntities.product });
   }
 }
 //
@@ -61,7 +67,7 @@ async function deleteProduct(id) {
     const deleteResult = await Product.findByIdAndDelete(id);
     return getDeletionResponse({ data: deleteResult, what: "Product" });
   } catch (error) {
-    return getErrorResponse(error);
+    return getErrorResponse({ error, what: operableEntities.product });
   }
 }
 

@@ -5,16 +5,22 @@ const {
   success_msg,
   getErrorResponse,
   err_msg,
+  getCreateResponse,
   getDeletionResponse,
   getUpdateResponse,
 } = require("../utils/responseHandler");
+const { operableEntities } = require("../config/constants");
 
-async function createProduct(data) {
-  const addResult = await Stock.create(data);
-  return addResult;
+async function createStock(data) {
+  try {
+    const addResult = await Stock.create(data);
+    return getCreateResponse({ data: addResult, what: operableEntities.stock });
+  } catch (error) {
+    return getErrorResponse({ error, what: operableEntities.stock });
+  }
 }
 //
-async function getProducts({
+async function getStocks({
   currentPage,
   searchTerm,
   viewLimit,
@@ -45,29 +51,35 @@ async function getProducts({
   };
 }
 //
-async function updateProduct({ id, data }) {
+async function updateStock({ id, data }) {
   try {
     const editResult = await Stock.findByIdAndUpdate(id, data, {
       new: true,
     });
-    return getUpdateResponse({ data: editResult, what: "Stock" });
+    return getUpdateResponse({
+      data: editResult,
+      what: operableEntities.stock,
+    });
   } catch (error) {
-    return getErrorResponse(error);
+    return getErrorResponse({ error, what: operableEntities.stock });
   }
 }
 // not applicable like this
-async function deleteProduct(id) {
+async function deleteStock(id) {
   try {
     const deleteResult = await Stock.findByIdAndDelete(id);
-    return getDeletionResponse({ data: deleteResult, what: "Stock" });
+    return getDeletionResponse({
+      data: deleteResult,
+      what: operableEntities.stock,
+    });
   } catch (error) {
-    return getErrorResponse(error);
+    return getErrorResponse({ error, what: operableEntities.stock });
   }
 }
 
 module.exports = {
-  createProduct,
-  updateProduct,
-  deleteProduct,
-  getProducts,
+  createStock,
+  updateStock,
+  deleteStock,
+  getStocks,
 };

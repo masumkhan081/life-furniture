@@ -5,13 +5,19 @@ const {
   success_msg,
   getErrorResponse,
   err_msg,
+  getCreateResponse,
   getDeletionResponse,
   getUpdateResponse,
 } = require("../utils/responseHandler");
+const { operableEntities } = require("../config/constants");
 
 async function createOrder(data) {
-  const addResult = await Order.create(data);
-  return addResult;
+  try {
+    const addResult = await Order.create(data);
+    return getCreateResponse({ data: addResult, what: operableEntities.order });
+  } catch (error) {
+    return getErrorResponse({ error, what: operableEntities.order });
+  }
 }
 //
 async function getOrders({
@@ -50,18 +56,24 @@ async function updateOrder({ id, data }) {
     const editResult = await Order.findByIdAndUpdate(id, data, {
       new: true,
     });
-    return getUpdateResponse({ data: editResult, what: "Order" });
+    return getUpdateResponse({
+      data: editResult,
+      what: operableEntities.order,
+    });
   } catch (error) {
-    return getErrorResponse(error);
+    return getErrorResponse({ error, what: operableEntities.order });
   }
 }
 //
 async function deleteOrder(id) {
   try {
     const deleteResult = await Order.findByIdAndDelete(id);
-    return getDeletionResponse({ data: deleteResult, what: "Order" });
+    return getDeletionResponse({
+      data: deleteResult,
+      what: operableEntities.order,
+    });
   } catch (error) {
-    return getErrorResponse(error);
+    return getErrorResponse({ error, what: operableEntities.order });
   }
 }
 

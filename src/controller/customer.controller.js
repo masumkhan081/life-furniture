@@ -3,15 +3,7 @@ const httpStatus = require("http-status");
 
 async function createCustomer(req, res) {
   const result = await CustomerService.createCustomer(req.body);
-
-  console.log(">> " + JSON.stringify(result));
-
-  res.send({
-    statusCode: httpStatus.OK,
-    success: true,
-    message: "Customer Created successfully",
-    data: result,
-  });
+  res.send(result);
 }
 async function getCustomers(req, res) {
   // pagination check & logic

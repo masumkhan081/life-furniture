@@ -1,23 +1,16 @@
-const CustomerService = require("../cervices/customer.service");
+const productCategoryService = require("../cervices/productCategory.service");
 const httpStatus = require("http-status");
 
-async function createCustomer(req, res) {
-  const result = await CustomerService.createCustomer(req.body);
+async function createProductCategory(req, res) {
+  const result = await productCategoryService.createProductCategory(req.body);
 
-  console.log(">> " + JSON.stringify(result));
-
-  res.send({
-    statusCode: httpStatus.OK,
-    success: true,
-    message: "Customer Created successfully",
-    data: result,
-  });
+  res.send(result);
 }
-async function getCustomers(req, res) {
+async function getProductCategories(req, res) {
   // pagination check & logic
   const { currentPage, searchTerm, viewLimit, viewSkip } = req.query;
 
-  const result = await CustomerService.getCustomers({
+  const result = await productCategoryService.getProductCategories({
     currentPage,
     searchTerm,
     viewLimit,
@@ -27,27 +20,29 @@ async function getCustomers(req, res) {
   res.send({
     statusCode: httpStatus.OK,
     success: true,
-    message: "Customers fetched successfully",
+    message: "ProductCategorys fetched successfully",
     data: result,
   });
 }
 //
-async function updateCustomer(req, res) {
-  const result = await CustomerService.updateCustomer({
+async function updateProductCategory(req, res) {
+  const result = await productCategoryService.updateProductCategory({
     id: req.params.id,
     data: req.body,
   });
   res.send(result);
 }
 //
-async function deleteCustomer(req, res) {
-  const result = await CustomerService.deleteCustomer(req.params.id);
+async function deleteProductCategory(req, res) {
+  const result = await productCategoryService.deleteProductCategory(
+    req.params.id
+  );
   res.send(result);
 }
 //
 module.exports = {
-  createCustomer,
-  updateCustomer,
-  deleteCustomer,
-  getCustomers,
+  createProductCategory,
+  updateProductCategory,
+  deleteProductCategory,
+  getProductCategories,
 };

@@ -10,9 +10,11 @@ const {
   success_msg,
   getErrorResponse,
   err_msg,
+  getCreateResponse,
   getDeletionResponse,
   getUpdateResponse,
 } = require("../utils/responseHandler");
+const { operableEntities } = require("../config/constants");
 
 async function createUser({ res, username, email, phone, password }) {
   // already registered or not
@@ -75,7 +77,7 @@ async function updateUser({ id, data }) {
     });
     return getUpdateResponse({ data: editResult, what: "User" });
   } catch (error) {
-    return getErrorResponse(error);
+    return getErrorResponse({error,what:operableEntities.  });
   };
 }
 //
@@ -84,7 +86,7 @@ async function deleteUser(id) {
     const deleteResult = await userModel.findByIdAndDelete(id);
     return getDeletionResponse({ data: deleteResult, what: "User" });
   } catch (error) {
-    return getErrorResponse(error);
+    return getErrorResponse({error,what:operableEntities.  });
   }
 }
 

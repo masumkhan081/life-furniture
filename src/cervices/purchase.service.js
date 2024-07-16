@@ -5,14 +5,21 @@ const {
   success_msg,
   getErrorResponse,
   err_msg,
+  getCreateResponse,
   getDeletionResponse,
   getUpdateResponse,
 } = require("../utils/responseHandler");
+const { operableEntities } = require("../config/constants");
 
 
 async function createPurchase(data) {
-  const addResult = await Purchase.create(data);
-  return addResult;
+  
+   try {
+    const addResult = await Purchase.create(data);
+    return getCreateResponse({ data: addResult, what: "Purchase" });
+  } catch (error) {
+    return getErrorResponse({error,what:operableEntities.purchase  });
+  }
 }
 //
 async function getPurchases({
@@ -55,16 +62,16 @@ async function updatePurchase({ id, data }) {
     });
     return getUpdateResponse({ data: editResult, what: "Purchase" });
   } catch (error) {
-    return getErrorResponse(error);
+    return getErrorResponse({error,what:operableEntities.purchase  });
   };
 }
 //
 async function deletePurchase(id) {
   try {
     const deleteResult = await Purchase.findByIdAndDelete(id);
-    return getDeletionResponse({ data: deleteResult, what: "Purchase" });
+    return getDeletionResponse({ data: deleteResult, what:operableEntities.purchase });
   } catch (error) {
-    return getErrorResponse(error);
+    return getErrorResponse({error,what:operableEntities.purchase  });
   }
 }
 

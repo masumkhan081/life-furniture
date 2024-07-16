@@ -1,5 +1,14 @@
 const httpStatus = require("http-status");
 
+function getCreateResponse({ data, what }) {
+  return {
+    statusCode: data === null ? httpStatus[404] : 200,
+    success: data === null ? false : true,
+    message: data === null ? err_msg.id_not_found : success_msg.create(what),
+    data,
+  };
+}
+
 function getUpdateResponse({ data, what }) {
   return {
     statusCode: data === null ? httpStatus[404] : 200,
@@ -18,13 +27,13 @@ function getDeletionResponse({ data, what }) {
   };
 }
 
-function getErrorResponse(error) {
+function getErrorResponse({ error, what }) {
   if (error.code === 11000 || error.code === 11001) {
     // Duplicate key error
     return {
       statusCode: httpStatus[409],
       success: false,
-      message: err_msg.conflict("Showroom"),
+      message: err_msg.conflict(what),
     };
   }
   // Other errors
@@ -39,6 +48,7 @@ const success_msg = {
 };
 
 const err_msg = {
+  creation_failed: "Creation failed",
   id_not_found: "id not found",
   invalid: "Invalid Request",
   bad_req: "Bad Request",
@@ -50,6 +60,7 @@ const err_msg = {
 };
 
 module.exports = {
+  getCreateResponse,
   getUpdateResponse,
   getDeletionResponse,
   getErrorResponse,

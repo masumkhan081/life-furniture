@@ -1,4 +1,24 @@
 /* eslint-disable no-unused-vars */
+
+const operableEntities = {
+  address: "address",
+  product: "product",
+  customer: "customer",
+  supplier: "supplier",
+  product_category: "Product category",
+  order: "order",
+  purchase: "purchase",
+  stock: "stock",
+  discount: "discount",
+  sale: "sale",
+  sale_return: "Sale return",
+  delivery: "delivery",
+  salesman: "salesman",
+  expense: "expense",
+  expense_category: "Expense category",
+  salary: "salary",
+};
+
 const paginationFields = ["page", "limit", "sortBy", "sortOrder"];
 const defaultViewLimit = 10;
 const defaultSortOrder = "desc";
@@ -36,4 +56,5 @@ module.exports = {
   address_searchables,
   defaultSortOrder,
   defaultSortBy,
+  operableEntities,
 };

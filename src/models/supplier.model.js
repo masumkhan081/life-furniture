@@ -18,7 +18,7 @@ const supplierSchema = new Schema(
     mobile: { type: String, required: true, unique: true },
     supplier_type: {
       type: String,
-      enum: ["COMPANY", "PERSON"],
+      enum: ["COMPANY", "CREAFTSMAN"],
       default: "COMPANY",
     },
     address: {

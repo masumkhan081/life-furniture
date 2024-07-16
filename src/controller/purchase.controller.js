@@ -1,44 +1,39 @@
-const addressService = require("../cervices/address.service");
+const purchaseService = require("../cervices/purchase.service");
 const httpStatus = require("http-status");
 
-async function createAddress(req, res) {
-  const result = await addressService.createAddress(req.body);
-  res.send({
-    statusCode: httpStatus.OK,
-    success: true,
-    message: "Address created successfully",
-    data: result,
-  });
+async function createPurchase(req, res) {
+  const result = await purchaseService.createPurchase(req.body);
+  res.send(result);
 }
-async function getAddresses(req, res) {
+async function getPurchasees(req, res) {
   // pagination check & logic
 
-  const result = await addressService.getAddresses(req.query);
+  const result = await purchaseService.getPurchases(req.query);
 
   res.send({
     statusCode: httpStatus.OK,
     success: true,
-    message: "Addresses fetched successfully",
+    message: "Purchasees fetched successfully",
     data: result,
   });
 }
 //
-async function updateAddress(req, res) {
-  const result = await addressService.updateAddress({
+async function updatePurchase(req, res) {
+  const result = await purchaseService.updatePurchase({
     id: req.params.id,
     data: req.body,
   });
   res.send(result);
 }
 //
-async function deleteAddress(req, res) {
-  const result = await addressService.deleteAddress(req.params.id);
+async function deletePurchase(req, res) {
+  const result = await purchaseService.deletePurchase(req.params.id);
   res.send(result);
 }
 //
 module.exports = {
-  createAddress,
-  updateAddress,
-  deleteAddress,
-  getAddresses,
+  createPurchase,
+  updatePurchase,
+  deletePurchase,
+  getPurchasees,
 };

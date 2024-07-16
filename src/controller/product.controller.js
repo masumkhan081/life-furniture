@@ -3,12 +3,7 @@ const httpStatus = require("http-status");
 
 async function createProduct(req, res) {
   const result = await productService.createProduct(req.body);
-  res.send({
-    statusCode: httpStatus.OK,
-    success: true,
-    message: "Product Created successfully",
-    data: result,
-  });
+  res.send(result);
 }
 
 async function getProducts(req, res) {

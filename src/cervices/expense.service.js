@@ -5,13 +5,22 @@ const {
   success_msg,
   getErrorResponse,
   err_msg,
+  getCreateResponse,
   getDeletionResponse,
   getUpdateResponse,
 } = require("../utils/responseHandler");
+const { operableEntities } = require("../config/constants");
 
 async function createExpense(data) {
-  const addResult = await Expense.create(data);
-  return addResult;
+  try {
+    const addResult = await Expense.create(data);
+    return getCreateResponse({
+      data: addResult,
+      what: operableEntities.expense,
+    });
+  } catch (error) {
+    return getErrorResponse({ error, what: operableEntities.expense });
+  }
 }
 //
 async function getExpenses({
@@ -50,18 +59,24 @@ async function updateExpense({ id, data }) {
     const editResult = await Expense.findByIdAndUpdate(id, data, {
       new: true,
     });
-    return getUpdateResponse({ data: editResult, what: "Expense" });
+    return getUpdateResponse({
+      data: editResult,
+      what: operableEntities.expense,
+    });
   } catch (error) {
-    return getErrorResponse(error);
+    return getErrorResponse({ error, what: operableEntities.expense });
   }
 }
 //
 async function deleteExpense(id) {
   try {
     const deleteResult = await Expense.findByIdAndDelete(id);
-    return getDeletionResponse({ data: deleteResult, what: "Expense" });
+    return getDeletionResponse({
+      data: deleteResult,
+      what: operableEntities.expense,
+    });
   } catch (error) {
-    return getErrorResponse(error);
+    return getErrorResponse({ error, what: operableEntities.expense });
   }
 }
 

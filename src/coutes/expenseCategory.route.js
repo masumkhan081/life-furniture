@@ -1,10 +1,10 @@
 const { Router } = require("express");
 const router = Router();
-const productController = require("../controller/product.controller.js");
+const expenseController = require("../controller/expenseCategory.controller");
 //
-router.post("/", productController.createProduct);
-router.get("/", productController.getProducts);
-router.patch("/:id", productController.updateProduct);
-router.delete("/:id", productController.deleteProduct);
+router.post("/", expenseController.createExpenseCategory);
+router.get("/", expenseController.getExpenseCategories);
+router.patch("/:id", expenseController.updateExpenseCategory);
+router.delete("/:id", expenseController.deleteExpenseCategory);
 
 module.exports = router;

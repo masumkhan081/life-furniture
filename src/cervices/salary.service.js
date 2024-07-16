@@ -5,13 +5,19 @@ const {
   success_msg,
   getErrorResponse,
   err_msg,
+  getCreateResponse,
   getDeletionResponse,
   getUpdateResponse,
 } = require("../utils/responseHandler");
+const { operableEntities } = require("../config/constants");
 
 async function createSalary(data) {
-  const addResult = await Salary.create(data);
-  return addResult;
+  try {
+    const addResult = await Salary.create(data);
+    return getCreateResponse({ data: addResult, what: "Salary" });
+  } catch (error) {
+    return getErrorResponse({ error, what: operableEntities.salary });
+  }
 }
 //
 async function getSalaries({
@@ -52,7 +58,7 @@ async function updateSalary({ id, data }) {
     });
     return getUpdateResponse({ data: editResult, what: "Salary" });
   } catch (error) {
-    return getErrorResponse(error);
+    return getErrorResponse({ error, what: operableEntities.salary });
   }
 }
 //
@@ -61,7 +67,7 @@ async function deleteSalary(id) {
     const deleteResult = await Salary.findByIdAndDelete(id);
     return getDeletionResponse({ data: deleteResult, what: "Salary" });
   } catch (error) {
-    return getErrorResponse(error);
+    return getErrorResponse({ error, what: operableEntities.salary });
   }
 }
 

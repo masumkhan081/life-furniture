@@ -1,17 +1,27 @@
-const ExpenseCategory = require("../models/ExpenseCategoryCategory.model");
+const ExpenseCategory = require("../models/expenseCategory.model");
 /* eslint-disable no-unused-vars */
 const { getSearchAndPagination } = require("../utils/pagination");
+const { operableEntities } = require("../config/constants");
 const {
   success_msg,
   getErrorResponse,
   err_msg,
+  getCreateResponse,
   getDeletionResponse,
   getUpdateResponse,
 } = require("../utils/responseHandler");
 
 async function createExpenseCategory(data) {
-  const addResult = await ExpenseCategory.create(data);
-  return addResult;
+  try {
+    const addResult = await ExpenseCategory.create(data);
+    return getCreateResponse({
+      data: addResult,
+      what: operableEntities.expense_category,
+    });
+  } catch (error) {
+    console.log("err: " + JSON.stringify(error));
+    return getErrorResponse({ error, what: operableEntities.expense_category });
+  }
 }
 //
 async function getExpenseCategories({
@@ -52,7 +62,7 @@ async function updateExpenseCategory({ id, data }) {
     });
     return getUpdateResponse({ data: editResult, what: "Expense category" });
   } catch (error) {
-    return getErrorResponse(error);
+    return getErrorResponse({ error, what: operableEntities.expense_category });
   }
 }
 //
@@ -64,7 +74,7 @@ async function deleteExpenseCategory(id) {
       what: "Expense category",
     });
   } catch (error) {
-    return getErrorResponse(error);
+    return getErrorResponse({ error, what: operableEntities.expense_category });
   }
 }
 

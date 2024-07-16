@@ -3,12 +3,7 @@ const httpStatus = require("http-status");
 
 async function createAddress(req, res) {
   const result = await addressService.createAddress(req.body);
-  res.send({
-    statusCode: httpStatus.OK,
-    success: true,
-    message: "Address created successfully",
-    data: result,
-  });
+  res.send(result);
 }
 async function getAddresses(req, res) {
   // pagination check & logic

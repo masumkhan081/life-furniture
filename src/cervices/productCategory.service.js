@@ -5,13 +5,19 @@ const {
   success_msg,
   getErrorResponse,
   err_msg,
+  getCreateResponse,
   getDeletionResponse,
   getUpdateResponse,
 } = require("../utils/responseHandler");
+const { operableEntities } = require("../config/constants");
 
 async function createProductCategory(data) {
-  const addResult = await ProductCategory.create(data);
-  return addResult;
+  try {
+    const addResult = await ProductCategory.create(data);
+    return getCreateResponse({ data: addResult, what:operableEntities.product_category });
+  } catch (error) {
+    return getErrorResponse({error,what:operableEntities.product_category  });
+  }
 }
 //
 async function getProductCategories({
@@ -46,23 +52,25 @@ async function getProductCategories({
 }
 //
 async function updateProductCategory({ id, data }) {
- 
-   try {
+  try {
     const editResult = await ProductCategory.findByIdAndUpdate(id, data, {
       new: true,
     });
-    return getUpdateResponse({ data: editResult, what: "Product category" });
+    return getUpdateResponse({ data: editResult, what:operableEntities.product_category });
   } catch (error) {
-    return getErrorResponse(error);
-  };
+    return getErrorResponse({error,what:operableEntities.product_category  });
+  }
 }
 //
 async function deleteProductCategory(id) {
   try {
     const deleteResult = await ProductCategory.findByIdAndDelete(id);
-    return getDeletionResponse({ data: deleteResult, what: "Product category" });
+    return getDeletionResponse({
+      data: deleteResult,
+      what:operableEntities.product_category,
+    });
   } catch (error) {
-    return getErrorResponse(error);
+    return getErrorResponse({error,what:operableEntities.product_category  });
   }
 }
 

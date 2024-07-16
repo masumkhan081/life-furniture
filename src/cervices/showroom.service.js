@@ -6,21 +6,21 @@ const {
   success_msg,
   getErrorResponse,
   err_msg,
+  getCreateResponse,
   getDeletionResponse,
   getUpdateResponse,
 } = require("../utils/responseHandler");
+const { operableEntities } = require("../config/constants");
 
 async function createShowroom(data) {
   try {
     const addResult = await Showroom.create(data);
-    return {
-      statusCode: 201,
-      success: true,
-      msg: success_msg.create("Showroom"),
+    return getCreateResponse({
       data: addResult,
-    };
+      what: operableEntities.showroom,
+    });
   } catch (error) {
-    return getErrorResponse(error);
+    return getErrorResponse({ error, what: operableEntities.showroom });
   }
 }
 //
@@ -60,18 +60,24 @@ async function updateShowroom({ id, data }) {
     const editResult = await Showroom.findByIdAndUpdate(id, data, {
       new: true,
     });
-    return getUpdateResponse({ data: editResult, what: "Showroom" });
+    return getUpdateResponse({
+      data: editResult,
+      what: operableEntities.showroom,
+    });
   } catch (error) {
-    return getErrorResponse(error);
+    return getErrorResponse({ error, what: operableEntities.showroom });
   }
 }
 //
 async function deleteShowroom(id) {
   try {
     const deleteResult = await Showroom.findByIdAndDelete(id);
-    return getDeletionResponse({ data: deleteResult, what: "Showroom" });
+    return getDeletionResponse({
+      data: deleteResult,
+      what: operableEntities.showroom,
+    });
   } catch (error) {
-    return getErrorResponse(error);
+    return getErrorResponse({ error, what: operableEntities.showroom });
   }
 }
 

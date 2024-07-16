@@ -3,12 +3,7 @@ const httpStatus = require("http-status");
 
 async function createExpense(req, res) {
   const result = await CustomerService.createCustomer(req.body);
-  res.send({
-    statusCode: httpStatus.OK,
-    success: true,
-    message: "Customer Created successfully",
-    data: result,
-  });
+  res.send(result);
 }
 async function getExpenses(req, res) {
   // pagination check & logic

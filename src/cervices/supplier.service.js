@@ -5,13 +5,19 @@ const {
   success_msg,
   getErrorResponse,
   err_msg,
+  getCreateResponse,
   getDeletionResponse,
   getUpdateResponse,
 } = require("../utils/responseHandler");
+const { operableEntities } = require("../config/constants");
 
 async function createSupplier(data) {
-  const addResult = await Supplier.create(data);
-  return addResult;
+  try {
+    const addResult = await Supplier.create(data);
+    return getCreateResponse({ data: addResult, what:operableEntities.supplier   });
+  } catch (error) {
+    return getErrorResponse({error,what:operableEntities.supplier  });
+  }
 }
 //
 async function getSuppliers({
@@ -50,9 +56,9 @@ async function updateSupplier({ id, data }) {
     const editResult = await Supplier.findByIdAndUpdate(id, data, {
       new: true,
     });
-    return getUpdateResponse({ data: editResult, what: "Supplier" });
+    return getUpdateResponse({ data: editResult, what:operableEntities.supplier  });
   } catch (error) {
-    return getErrorResponse(error);
+    return getErrorResponse({error,what:operableEntities.supplier  });
   }
 }
 //
@@ -61,7 +67,7 @@ async function deleteSupplier(id) {
     const deleteResult = await Supplier.findByIdAndDelete(id);
     return getDeletionResponse({ data: deleteResult, what: "Supplier" });
   } catch (error) {
-    return getErrorResponse(error);
+    return getErrorResponse({error,what:operableEntities.supplier  });
   }
 }
 

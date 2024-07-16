@@ -5,13 +5,19 @@ const {
   success_msg,
   getErrorResponse,
   err_msg,
+  getCreateResponse,
   getDeletionResponse,
   getUpdateResponse,
 } = require("../utils/responseHandler");
+const { operableEntities } = require("../config/constants");
 
 async function createSale(data) {
-  const addResult = await Sale.create(data);
-  return addResult;
+  try {
+    const addResult = await Sale.create(data);
+    return getCreateResponse({ data: addResult, what: operableEntities.sale });
+  } catch (error) {
+    return getErrorResponse({ error, what: operableEntities.sale });
+  }
 }
 //
 async function getSales({
@@ -46,23 +52,25 @@ async function getSales({
 }
 //
 async function updateSale({ id, data }) {
-  
-   try {
+  try {
     const editResult = await Sale.findByIdAndUpdate(id, data, {
       new: true,
     });
-    return getUpdateResponse({ data: editResult, what: "Sale" });
+    return getUpdateResponse({ data: editResult, what: operableEntities.sale });
   } catch (error) {
-    return getErrorResponse(error);
-  };
+    return getErrorResponse({ error, what: operableEntities.sale });
+  }
 }
 //
 async function deleteSale(id) {
   try {
     const deleteResult = await Sale.findByIdAndDelete(id);
-    return getDeletionResponse({ data: deleteResult, what: "Sale" });
+    return getDeletionResponse({
+      data: deleteResult,
+      what: operableEntities.sale,
+    });
   } catch (error) {
-    return getErrorResponse(error);
+    return getErrorResponse({ error, what: operableEntities.sale });
   }
 }
 

@@ -1,19 +1,14 @@
-const addressService = require("../cervices/address.service");
+const saleService = require("../cervices/sale.service");
 const httpStatus = require("http-status");
 
-async function createAddress(req, res) {
-  const result = await addressService.createAddress(req.body);
-  res.send({
-    statusCode: httpStatus.OK,
-    success: true,
-    message: "Address created successfully",
-    data: result,
-  });
+async function createSale(req, res) {
+  const result = await saleService.create(req.body);
+  res.send(result);
 }
-async function getAddresses(req, res) {
+async function getSales(req, res) {
   // pagination check & logic
 
-  const result = await addressService.getAddresses(req.query);
+  const result = await saleService.getSales(req.query);
 
   res.send({
     statusCode: httpStatus.OK,
@@ -23,22 +18,22 @@ async function getAddresses(req, res) {
   });
 }
 //
-async function updateAddress(req, res) {
-  const result = await addressService.updateAddress({
+async function updateSale(req, res) {
+  const result = await saleService.updateSale({
     id: req.params.id,
     data: req.body,
   });
   res.send(result);
 }
 //
-async function deleteAddress(req, res) {
-  const result = await addressService.deleteAddress(req.params.id);
+async function deleteSale(req, res) {
+  const result = await saleService.deleteSale(req.params.id);
   res.send(result);
 }
 //
 module.exports = {
-  createAddress,
-  updateAddress,
-  deleteAddress,
-  getAddresses,
+  createSale,
+  updateSale,
+  deleteSale,
+  getSales,
 };

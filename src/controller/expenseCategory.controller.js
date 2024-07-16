@@ -1,23 +1,15 @@
-const CustomerService = require("../cervices/customer.service");
+const expenseCategoryService = require("../cervices/expenseCategory.service");
 const httpStatus = require("http-status");
 
-async function createCustomer(req, res) {
-  const result = await CustomerService.createCustomer(req.body);
-
-  console.log(">> " + JSON.stringify(result));
-
-  res.send({
-    statusCode: httpStatus.OK,
-    success: true,
-    message: "Customer Created successfully",
-    data: result,
-  });
+async function createExpenseCategory(req, res) {
+  const result = await expenseCategoryService.createExpenseCategory(req.body);
+  res.send(result);
 }
-async function getCustomers(req, res) {
+async function getExpenseCategories(req, res) {
   // pagination check & logic
   const { currentPage, searchTerm, viewLimit, viewSkip } = req.query;
 
-  const result = await CustomerService.getCustomers({
+  const result = await expenseCategoryService.getExpenseCategories({
     currentPage,
     searchTerm,
     viewLimit,
@@ -32,22 +24,22 @@ async function getCustomers(req, res) {
   });
 }
 //
-async function updateCustomer(req, res) {
-  const result = await CustomerService.updateCustomer({
+async function updateExpenseCategory(req, res) {
+  const result = await expenseCategoryService.updateExpenseCategory({
     id: req.params.id,
     data: req.body,
   });
   res.send(result);
 }
 //
-async function deleteCustomer(req, res) {
-  const result = await CustomerService.deleteCustomer(req.params.id);
+async function deleteExpenseCategory(req, res) {
+  const result = await expenseCategoryService.deleteCustomer(req.params.id);
   res.send(result);
 }
 //
 module.exports = {
-  createCustomer,
-  updateCustomer,
-  deleteCustomer,
-  getCustomers,
+  createExpenseCategory,
+  updateExpenseCategory,
+  deleteExpenseCategory,
+  getExpenseCategories,
 };
