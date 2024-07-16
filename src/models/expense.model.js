@@ -9,13 +9,13 @@ const expenseDetailSchema = new Schema({
 
 const expenseSchema = new Schema(
   {
+    title: {
+      type: Number,
+      required: true,
+    },
     showroom: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "showrooms",
-      required: true,
-    },
-    title: {
-      type: Number,
       required: true,
     },
     category: {

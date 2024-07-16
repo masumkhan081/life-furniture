@@ -19,6 +19,7 @@ const salesmenSchema = new Schema(
       ref: "addresses",
       required: true,
     },
+    salary: { type: Number, required: false },
   },
   {
     timestamps: true,

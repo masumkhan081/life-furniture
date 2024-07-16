@@ -1,33 +1,33 @@
 const { Schema, model } = require("mongoose");
 const mongoose = require("mongoose");
 
+const salaryGiving = new Schema({
+  paid: {
+    type: Number,
+    required: true,
+  },
+  payment_date: {
+    type: Date,
+    default: Date.now,
+  },
+});
+
 const salarySchema = new Schema(
   {
-    title: {
-      type: String,
-      required: true,
-      unique: true,
-    },
-    ref_id: {
+    salesman: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "refname",
+      ref: "salesmen",
       required: true,
     },
-    introduction: {
-      type: String,
+    month: {
+      type: Number,
       required: true,
     },
-
-    quote: {
-      type: String,
+    year: {
+      type: Number,
       required: true,
     },
-    conclusion: {
-      type: String,
-      required: true,
-    },
-
-    keywords: [String],
+    details: [salaryGiving],
   },
   {
     timestamps: true,
