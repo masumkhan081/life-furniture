@@ -1,17 +1,17 @@
 /* eslint-disable no-empty */
 /* eslint-disable no-unused-vars */
-const { defaultViewLimit } = require("../config/constants");
 
-const address_searchables = [
-  "district",
-  "subdistrict",
-  "village",
-  "street",
-  "building",
-];
+const {
+  defaultViewLimit,
+  address_searchables,
+} = require("../config/constants");
 
 function getSearchAndPagination(query) {
-  const { search, page, limit, search_by } = query;
+  const { search, page, limit, search_by, sort_by, sort_order } = query;
+
+  // sorting data with a particular field and order or by taking prefined defaults in this regard
+  const sortBy = sort_by || "createdAt";
+  const sortOrder = sort_order || "desc";
 
   // page-number - pagination field
   const currentPage = page === "" ? 1 : page === undefined ? 1 : page;
@@ -37,40 +37,33 @@ function getSearchAndPagination(query) {
 
   let searchConditions = [];
   let filterConditions = {};
-  let sortConditions = {};
+  let sortConditions = { [sortBy]: sortOrder };
   let filterData;
 
-  //
-  if (searchBy === "whole") {
-    for (let i = 0; i < address_searchables.length; i++) {
+  for (let i = 0; i < address_searchables.length; i++) {
+    filterData = query[address_searchables[i]];
+    if (filterData !== undefined && filterData !== "") {
+      filterConditions[address_searchables[i]] = filterData;
+    } else {
       searchConditions.push({
         [address_searchables[i]]: { $regex: new RegExp(searchTerm, "i") },
       });
     }
-    filterConditions["$or"] = searchConditions;
-    console.log("whole filter");
-  } else {
-    for (let i = 0; i < address_searchables.length; i++) {
-      filterData = query[address_searchables[i]];
-      if (filterData !== undefined && filterData !== "") {
-        filterConditions[address_searchables[i]] = filterData;
-      }
-    }
-
-    filterConditions[searchBy] = { $regex: new RegExp(searchTerm, "i") };
-    // console.log(JSON.stringify(filterConditions) + searchTerm);
-    
   }
+  filterConditions["$or"] = searchConditions;
+
+  console.log(JSON.stringify(filterConditions));
 
   return {
     currentPage,
     searchTerm,
     viewLimit,
     viewSkip,
+    sortBy,
+    sortOrder,
     filterConditions,
     sortConditions,
-    searchConditions,
   };
 }
 
-module.exports = getSearchAndPagination;
+module.exports = { getSearchAndPagination };

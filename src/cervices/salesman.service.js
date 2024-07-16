@@ -1,4 +1,9 @@
 const Salesman = require("../models/salesman.model");
+const {
+  getUpdateResponse,
+  getDeletionResponse,
+  getErrorResponse,
+} = require("../utils/responseHandler");
 
 async function createSalesman(data) {
   const addResult = await Salesman.create(data);
@@ -37,15 +42,23 @@ async function getSalesmen({
 }
 //
 async function updateSalesmen({ id, data }) {
-  const editResult = await Salesman.findByIdAndUpdate(id, data, {
-    new: true,
-  });
-  return editResult;
+  try {
+    const editResult = await Salesman.findByIdAndUpdate(id, data, {
+      new: true,
+    });
+    return getUpdateResponse({ data: editResult, what: "Salesman" });
+  } catch (error) {
+    return getErrorResponse(error);
+  }
 }
 //
 async function deleteSalesmen(id) {
-  const deleteResult = await Salesman.findByIdAndDelete(id);
-  return deleteResult;
+  try {
+    const deleteResult = await Salesman.findByIdAndDelete(id);
+    return getDeletionResponse({ data: deleteResult, what: "Salesman" });
+  } catch (error) {
+    return getErrorResponse(error);
+  }
 }
 
 module.exports = {

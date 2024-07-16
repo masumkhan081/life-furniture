@@ -1,4 +1,13 @@
 const ExpenseCategory = require("../models/ExpenseCategoryCategory.model");
+/* eslint-disable no-unused-vars */
+const { getSearchAndPagination } = require("../utils/pagination");
+const {
+  success_msg,
+  getErrorResponse,
+  err_msg,
+  getDeletionResponse,
+  getUpdateResponse,
+} = require("../utils/responseHandler");
 
 async function createExpenseCategory(data) {
   const addResult = await ExpenseCategory.create(data);
@@ -37,15 +46,26 @@ async function getExpenseCategories({
 }
 //
 async function updateExpenseCategory({ id, data }) {
-  const editResult = await ExpenseCategory.findByIdAndUpdate(id, data, {
-    new: true,
-  });
-  return editResult;
+  try {
+    const editResult = await ExpenseCategory.findByIdAndUpdate(id, data, {
+      new: true,
+    });
+    return getUpdateResponse({ data: editResult, what: "Expense category" });
+  } catch (error) {
+    return getErrorResponse(error);
+  }
 }
 //
 async function deleteExpenseCategory(id) {
-  const deleteResult = await ExpenseCategory.findByIdAndDelete(id);
-  return deleteResult;
+  try {
+    const deleteResult = await ExpenseCategory.findByIdAndDelete(id);
+    return getDeletionResponse({
+      data: deleteResult,
+      what: "Expense category",
+    });
+  } catch (error) {
+    return getErrorResponse(error);
+  }
 }
 
 module.exports = {

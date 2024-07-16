@@ -4,6 +4,15 @@ const bcrypt = require("bcrypt");
 const mailService = require("../utils/mail");
 const config = require("../config");
 const httpStatus = require("http-status");
+/* eslint-disable no-unused-vars */
+const { getSearchAndPagination } = require("../utils/pagination");
+const {
+  success_msg,
+  getErrorResponse,
+  err_msg,
+  getDeletionResponse,
+  getUpdateResponse,
+} = require("../utils/responseHandler");
 
 async function createUser({ res, username, email, phone, password }) {
   // already registered or not
@@ -59,15 +68,24 @@ async function getUsers({
 }
 //
 async function updateUser({ id, data }) {
-  const editResult = await userModel.findByIdAndUpdate(id, data, {
-    new: true,
-  });
-  return editResult;
+  
+   try {
+    const editResult = await userModel.findByIdAndUpdate(id, data, {
+      new: true,
+    });
+    return getUpdateResponse({ data: editResult, what: "User" });
+  } catch (error) {
+    return getErrorResponse(error);
+  };
 }
 //
 async function deleteUser(id) {
-  const deleteResult = await userModel.findByIdAndDelete(id);
-  return deleteResult;
+  try {
+    const deleteResult = await userModel.findByIdAndDelete(id);
+    return getDeletionResponse({ data: deleteResult, what: "User" });
+  } catch (error) {
+    return getErrorResponse(error);
+  }
 }
 
 async function login({ res, username, password }) {

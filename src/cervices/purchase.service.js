@@ -1,4 +1,14 @@
 const Purchase = require("../models/purchase.model");
+/* eslint-disable no-unused-vars */
+const { getSearchAndPagination } = require("../utils/pagination");
+const {
+  success_msg,
+  getErrorResponse,
+  err_msg,
+  getDeletionResponse,
+  getUpdateResponse,
+} = require("../utils/responseHandler");
+
 
 async function createPurchase(data) {
   const addResult = await Purchase.create(data);
@@ -38,15 +48,24 @@ async function getPurchases({
 }
 //
 async function updatePurchase({ id, data }) {
-  const editResult = await Purchase.findByIdAndUpdate(id, data, {
-    new: true,
-  });
-  return editResult;
+  
+   try {
+    const editResult = await Purchase.findByIdAndUpdate(id, data, {
+      new: true,
+    });
+    return getUpdateResponse({ data: editResult, what: "Purchase" });
+  } catch (error) {
+    return getErrorResponse(error);
+  };
 }
 //
 async function deletePurchase(id) {
-  const deleteResult = await Purchase.findByIdAndDelete(id);
-  return deleteResult;
+  try {
+    const deleteResult = await Purchase.findByIdAndDelete(id);
+    return getDeletionResponse({ data: deleteResult, what: "Purchase" });
+  } catch (error) {
+    return getErrorResponse(error);
+  }
 }
 
 module.exports = {

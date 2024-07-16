@@ -1,4 +1,13 @@
 const Supplier = require("../models/supplier.model");
+/* eslint-disable no-unused-vars */
+const { getSearchAndPagination } = require("../utils/pagination");
+const {
+  success_msg,
+  getErrorResponse,
+  err_msg,
+  getDeletionResponse,
+  getUpdateResponse,
+} = require("../utils/responseHandler");
 
 async function createSupplier(data) {
   const addResult = await Supplier.create(data);
@@ -37,15 +46,23 @@ async function getSuppliers({
 }
 //
 async function updateSupplier({ id, data }) {
-  const editResult = await Supplier.findByIdAndUpdate(id, data, {
-    new: true,
-  });
-  return editResult;
+  try {
+    const editResult = await Supplier.findByIdAndUpdate(id, data, {
+      new: true,
+    });
+    return getUpdateResponse({ data: editResult, what: "Supplier" });
+  } catch (error) {
+    return getErrorResponse(error);
+  }
 }
 //
 async function deleteSupplier(id) {
-  const deleteResult = await Supplier.findByIdAndDelete(id);
-  return deleteResult;
+  try {
+    const deleteResult = await Supplier.findByIdAndDelete(id);
+    return getDeletionResponse({ data: deleteResult, what: "Supplier" });
+  } catch (error) {
+    return getErrorResponse(error);
+  }
 }
 
 module.exports = {

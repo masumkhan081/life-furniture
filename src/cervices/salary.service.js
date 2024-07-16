@@ -1,4 +1,13 @@
 const Salary = require("../models/salary.model");
+/* eslint-disable no-unused-vars */
+const { getSearchAndPagination } = require("../utils/pagination");
+const {
+  success_msg,
+  getErrorResponse,
+  err_msg,
+  getDeletionResponse,
+  getUpdateResponse,
+} = require("../utils/responseHandler");
 
 async function createSalary(data) {
   const addResult = await Salary.create(data);
@@ -37,15 +46,23 @@ async function getSalaries({
 }
 //
 async function updateSalary({ id, data }) {
-  const editResult = await Salary.findByIdAndUpdate(id, data, {
-    new: true,
-  });
-  return editResult;
+  try {
+    const editResult = await Salary.findByIdAndUpdate(id, data, {
+      new: true,
+    });
+    return getUpdateResponse({ data: editResult, what: "Salary" });
+  } catch (error) {
+    return getErrorResponse(error);
+  }
 }
 //
 async function deleteSalary(id) {
-  const deleteResult = await Salary.findByIdAndDelete(id);
-  return deleteResult;
+  try {
+    const deleteResult = await Salary.findByIdAndDelete(id);
+    return getDeletionResponse({ data: deleteResult, what: "Salary" });
+  } catch (error) {
+    return getErrorResponse(error);
+  }
 }
 
 module.exports = {

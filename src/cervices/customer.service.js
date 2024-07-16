@@ -2,6 +2,15 @@
 const Customer = require("../models/customer.model");
 const customerCreationSchema = require("../validation/customer.validate");
 const Address = require("../models/address.model");
+/* eslint-disable no-unused-vars */
+const { getSearchAndPagination } = require("../utils/pagination");
+const {
+  success_msg,
+  getErrorResponse,
+  err_msg,
+  getDeletionResponse,
+  getUpdateResponse,
+} = require("../utils/responseHandler");
 
 async function createCustomer(data) {
   let validOrNot;
@@ -40,10 +49,9 @@ async function getCustomers({
   sortBy,
   sortOrder,
 }) {
-  const fetchResult = await Customer
-    .find({
-      title: { $regex: new RegExp(searchTerm, "i") },
-    })
+  const fetchResult = await Customer.find({
+    title: { $regex: new RegExp(searchTerm, "i") },
+  })
     .skip(viewSkip)
     .limit(viewLimit);
 
@@ -65,15 +73,23 @@ async function getCustomers({
 }
 //
 async function updateCustomer({ id, data }) {
-  const editResult = await Customer.findByIdAndUpdate(id, data, {
-    new: true,
-  });
-  return editResult;
+  try {
+    const editResult = await Customer.findByIdAndUpdate(id, data, {
+      new: true,
+    });
+    return getUpdateResponse({ data: editResult, what: "Customer" });
+  } catch (error) {
+    return getErrorResponse(error);
+  }
 }
 //
 async function deleteCustomer(id) {
-  const deleteResult = await Customer.findByIdAndDelete(id);
-  return deleteResult;
+  try {
+    const deleteResult = await Customer.findByIdAndDelete(id);
+    return getDeletionResponse({ data: deleteResult, what: "Customer" });
+  } catch (error) {
+    return getErrorResponse(error);
+  }
 }
 
 module.exports = {

@@ -1,4 +1,13 @@
 const Discount = require("../models/discount.model");
+/* eslint-disable no-unused-vars */
+const { getSearchAndPagination } = require("../utils/pagination");
+const {
+  success_msg,
+  getErrorResponse,
+  err_msg,
+  getDeletionResponse,
+  getUpdateResponse,
+} = require("../utils/responseHandler");
 
 async function createDiscount(data) {
   const addResult = await Discount.create(data);
@@ -13,10 +22,9 @@ async function getDiscounts({
   sortBy,
   sortOrder,
 }) {
-  const fetchResult = await Discount
-    .find({
-      title: { $regex: new RegExp(searchTerm, "i") },
-    })
+  const fetchResult = await Discount.find({
+    title: { $regex: new RegExp(searchTerm, "i") },
+  })
     .skip(viewSkip)
     .limit(viewLimit);
 
@@ -38,15 +46,29 @@ async function getDiscounts({
 }
 
 async function updateDiscount({ id, data }) {
-  const updateResult = await Discount.findByIdAndUpdate(id, data, {
-    new: true,
-  });
-  return updateResult;
+  
+  try {
+    const editResult = await Discount.findByIdAndUpdate(id, data, {
+      new: true,
+    });
+    return getUpdateResponse({ data: editResult, what: "Discount" });
+  } catch (error) {
+    return getErrorResponse(error);
+  }
 }
 
 async function deleteDiscount(id) {
-  const deleteResult = await Discount.findByIdAndDelete(id);
-  return deleteResult;
+  try {
+    const deleteResult = await Discount.findByIdAndDelete(id);
+    return getDeletionResponse({ data: deleteResult, what: "Discount" });
+  } catch (error) {
+    return getErrorResponse(error);
+  }
 }
 
-module.exports = { createDiscount, updateDiscount, deleteDiscount, getDiscounts };
+module.exports = {
+  createDiscount,
+  updateDiscount,
+  deleteDiscount,
+  getDiscounts,
+};

@@ -1,4 +1,13 @@
 const Sale = require("../models/sale.model");
+/* eslint-disable no-unused-vars */
+const { getSearchAndPagination } = require("../utils/pagination");
+const {
+  success_msg,
+  getErrorResponse,
+  err_msg,
+  getDeletionResponse,
+  getUpdateResponse,
+} = require("../utils/responseHandler");
 
 async function createSale(data) {
   const addResult = await Sale.create(data);
@@ -37,15 +46,24 @@ async function getSales({
 }
 //
 async function updateSale({ id, data }) {
-  const editResult = await Sale.findByIdAndUpdate(id, data, {
-    new: true,
-  });
-  return editResult;
+  
+   try {
+    const editResult = await Sale.findByIdAndUpdate(id, data, {
+      new: true,
+    });
+    return getUpdateResponse({ data: editResult, what: "Sale" });
+  } catch (error) {
+    return getErrorResponse(error);
+  };
 }
 //
 async function deleteSale(id) {
-  const deleteResult = await Sale.findByIdAndDelete(id);
-  return deleteResult;
+  try {
+    const deleteResult = await Sale.findByIdAndDelete(id);
+    return getDeletionResponse({ data: deleteResult, what: "Sale" });
+  } catch (error) {
+    return getErrorResponse(error);
+  }
 }
 
 module.exports = {

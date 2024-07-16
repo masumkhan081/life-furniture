@@ -1,4 +1,13 @@
 const Stock = require("../models/stock.model");
+/* eslint-disable no-unused-vars */
+const { getSearchAndPagination } = require("../utils/pagination");
+const {
+  success_msg,
+  getErrorResponse,
+  err_msg,
+  getDeletionResponse,
+  getUpdateResponse,
+} = require("../utils/responseHandler");
 
 async function createProduct(data) {
   const addResult = await Stock.create(data);
@@ -37,15 +46,23 @@ async function getProducts({
 }
 //
 async function updateProduct({ id, data }) {
-  const editResult = await Stock.findByIdAndUpdate(id, data, {
-    new: true,
-  });
-  return editResult;
+  try {
+    const editResult = await Stock.findByIdAndUpdate(id, data, {
+      new: true,
+    });
+    return getUpdateResponse({ data: editResult, what: "Stock" });
+  } catch (error) {
+    return getErrorResponse(error);
+  }
 }
-//
+// not applicable like this
 async function deleteProduct(id) {
-  const deleteResult = await Stock.findByIdAndDelete(id);
-  return deleteResult;
+  try {
+    const deleteResult = await Stock.findByIdAndDelete(id);
+    return getDeletionResponse({ data: deleteResult, what: "Stock" });
+  } catch (error) {
+    return getErrorResponse(error);
+  }
 }
 
 module.exports = {

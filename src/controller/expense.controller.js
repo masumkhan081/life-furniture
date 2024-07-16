@@ -34,22 +34,12 @@ async function updateExpense(req, res) {
     id: req.params.id,
     data: req.body,
   });
-  res.send({
-    statusCode: httpStatus.OK,
-    success: true,
-    message: "Customer updated successfully",
-    data: result,
-  });
+  res.send(result);
 }
 //
 async function deleteExpense(req, res) {
   const result = await CustomerService.deleteCustomer(req.params.id);
-  res.send({
-    statusCode: httpStatus.OK,
-    success: true,
-    message: "Customer deleted successfully",
-    data: result,
-  });
+  res.send(result);
 }
 //
 module.exports = {

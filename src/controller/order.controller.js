@@ -28,22 +28,12 @@ async function updateAddress(req, res) {
     id: req.params.id,
     data: req.body,
   });
-  res.send({
-    statusCode: httpStatus.OK,
-    success: true,
-    message: "Address updated successfully",
-    data: result,
-  });
+  res.send(result);
 }
 //
 async function deleteAddress(req, res) {
   const result = await addressService.deleteAddress(req.params.id);
-  res.send({
-    statusCode: httpStatus.OK,
-    success: true,
-    message: "Address deleted successfully",
-    data: result,
-  });
+  res.send(result);
 }
 //
 module.exports = {

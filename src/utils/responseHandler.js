@@ -1,5 +1,23 @@
 const httpStatus = require("http-status");
 
+function getUpdateResponse({ data, what }) {
+  return {
+    statusCode: data === null ? httpStatus[404] : 200,
+    success: data === null ? false : true,
+    message: data === null ? err_msg.id_not_found : success_msg.update(what),
+    data,
+  };
+}
+
+function getDeletionResponse({ data, what }) {
+  return {
+    statusCode: data === null ? httpStatus[404] : 200,
+    success: data === null ? false : true,
+    message: data === null ? err_msg.id_not_found : success_msg.delete(what),
+    data,
+  };
+}
+
 function getErrorResponse(error) {
   if (error.code === 11000 || error.code === 11001) {
     // Duplicate key error
@@ -21,6 +39,7 @@ const success_msg = {
 };
 
 const err_msg = {
+  id_not_found: "id not found",
   invalid: "Invalid Request",
   bad_req: "Bad Request",
   not_found: (what) => `${what} not found`,
@@ -31,6 +50,8 @@ const err_msg = {
 };
 
 module.exports = {
+  getUpdateResponse,
+  getDeletionResponse,
   getErrorResponse,
   success_msg,
   err_msg,

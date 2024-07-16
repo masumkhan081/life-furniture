@@ -1,4 +1,13 @@
 const Expense = require("../models/expense.model");
+/* eslint-disable no-unused-vars */
+const { getSearchAndPagination } = require("../utils/pagination");
+const {
+  success_msg,
+  getErrorResponse,
+  err_msg,
+  getDeletionResponse,
+  getUpdateResponse,
+} = require("../utils/responseHandler");
 
 async function createExpense(data) {
   const addResult = await Expense.create(data);
@@ -37,15 +46,23 @@ async function getExpenses({
 }
 //
 async function updateExpense({ id, data }) {
-  const editResult = await Expense.findByIdAndUpdate(id, data, {
-    new: true,
-  });
-  return editResult;
+  try {
+    const editResult = await Expense.findByIdAndUpdate(id, data, {
+      new: true,
+    });
+    return getUpdateResponse({ data: editResult, what: "Expense" });
+  } catch (error) {
+    return getErrorResponse(error);
+  }
 }
 //
 async function deleteExpense(id) {
-  const deleteResult = await Expense.findByIdAndDelete(id);
-  return deleteResult;
+  try {
+    const deleteResult = await Expense.findByIdAndDelete(id);
+    return getDeletionResponse({ data: deleteResult, what: "Expense" });
+  } catch (error) {
+    return getErrorResponse(error);
+  }
 }
 
 module.exports = {
