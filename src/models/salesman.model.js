@@ -15,7 +15,8 @@ const salesmenSchema = new Schema(
     },
     mobile: { type: String, required: false },
     address: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "addresses",
       required: true,
     },
   },

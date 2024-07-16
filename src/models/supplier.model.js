@@ -18,12 +18,12 @@ const supplierSchema = new Schema(
     mobile: { type: String, required: true, unique: true },
     supplier_type: {
       type: String,
-      enum: ["COMPANY", "CREAFTSMAN"],
+      enum: ["COMPANY", "CREAFTSPERSON"],
       default: "COMPANY",
     },
     address: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "categories",
+      ref: "addresses",
       required: true,
     },
   },
