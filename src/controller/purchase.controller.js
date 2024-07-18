@@ -6,8 +6,6 @@ async function createPurchase(req, res) {
   res.send(result);
 }
 async function getPurchasees(req, res) {
-  // pagination check & logic
-
   const result = await purchaseService.getPurchases(req.query);
 
   res.send({

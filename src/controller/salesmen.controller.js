@@ -6,14 +6,12 @@ async function createSalesman(req, res) {
   res.send(result);
 }
 async function getSalesmen(req, res) {
-  // pagination check & logic
-
+   
   const result = await salesmanService.getSalesmen(req.query);
-
   res.send({
     statusCode: httpStatus.OK,
     success: true,
-    message: "Addresses fetched successfully",
+    message: "Salesmen fetched successfully",
     data: result,
   });
 }

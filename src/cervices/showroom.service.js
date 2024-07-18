@@ -24,24 +24,23 @@ async function createShowroom(data) {
   }
 }
 //
-async function getShowrooms({
-  currentPage,
-  searchTerm,
-  viewLimit,
-  viewSkip,
-  sortBy,
-  sortOrder,
-}) {
-  const fetchResult = await Showroom.find({
-    title: { $regex: new RegExp(searchTerm, "i") },
-  })
+async function getShowrooms(query) {
+  const {
+    currentPage,
+    viewLimit,
+    viewSkip,
+    sortBy,
+    sortOrder,
+    filterConditions,
+    sortConditions,
+  } = getSearchAndPagination({query,what:operableEntities.showroom});
+
+  const fetchResult = await Showroom.find(filterConditions)
+    .sort(sortConditions)
     .skip(viewSkip)
     .limit(viewLimit);
 
-  const total = await Showroom.countDocuments({
-    title: { $regex: new RegExp(searchTerm, "i") },
-  });
-
+  const total = await Showroom.countDocuments(filterConditions);
   return {
     meta: {
       total,

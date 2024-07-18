@@ -16,28 +16,27 @@ async function createOrderDelivery(data) {
     const addResult = await OrderDelivery.create(data);
     return getCreateResponse({ data: addResult, what: "Order delivery" });
   } catch (error) {
-    return getErrorResponse({error,what:operableEntities.delivery  });
+    return getErrorResponse({ error, what: operableEntities.delivery });
   }
 }
 //
-async function getOrderDeliveries({
-  currentPage,
-  searchTerm,
-  viewLimit,
-  viewSkip,
-  sortBy,
-  sortOrder,
-}) {
-  const fetchResult = await OrderDelivery.find({
-    title: { $regex: new RegExp(searchTerm, "i") },
-  })
+async function getOrderDeliveries(query) {
+  const {
+    currentPage,
+    viewLimit,
+    viewSkip,
+    sortBy,
+    sortOrder,
+    filterConditions,
+    sortConditions,
+  } = getSearchAndPagination({ query, what: operableEntities.delivery });
+
+  const fetchResult = await OrderDelivery.find(filterConditions)
+    .sort(sortConditions)
     .skip(viewSkip)
     .limit(viewLimit);
 
-  const total = await OrderDelivery.countDocuments({
-    title: { $regex: new RegExp(searchTerm, "i") },
-  });
-
+  const total = await OrderDelivery.countDocuments(filterConditions);
   return {
     meta: {
       total,
@@ -56,18 +55,24 @@ async function updateOrderDelivery({ id, data }) {
     const editResult = await OrderDelivery.findByIdAndUpdate(id, data, {
       new: true,
     });
-    return getUpdateResponse({ data: editResult, what: operableEntities.delivery  });
+    return getUpdateResponse({
+      data: editResult,
+      what: operableEntities.delivery,
+    });
   } catch (error) {
-    return getErrorResponse({error,what:operableEntities.delivery  });
+    return getErrorResponse({ error, what: operableEntities.delivery });
   }
 }
 //
 async function deleteOrderDelivery(id) {
   try {
     const deleteResult = await OrderDelivery.findByIdAndDelete(id);
-    return getDeletionResponse({ data: deleteResult, what:  operableEntities.delivery });
+    return getDeletionResponse({
+      data: deleteResult,
+      what: operableEntities.delivery,
+    });
   } catch (error) {
-    return getErrorResponse({error,what:operableEntities.delivery  });
+    return getErrorResponse({ error, what: operableEntities.delivery });
   }
 }
 

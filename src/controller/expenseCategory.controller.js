@@ -1,25 +1,18 @@
 const expenseCategoryService = require("../cervices/expenseCategory.service");
 const httpStatus = require("http-status");
+const { success_msg } = require("../utils/responseHandler");
 
 async function createExpenseCategory(req, res) {
   const result = await expenseCategoryService.createExpenseCategory(req.body);
   res.send(result);
 }
 async function getExpenseCategories(req, res) {
-  // pagination check & logic
-  const { currentPage, searchTerm, viewLimit, viewSkip } = req.query;
-
-  const result = await expenseCategoryService.getExpenseCategories({
-    currentPage,
-    searchTerm,
-    viewLimit,
-    viewSkip,
-  });
+  const result = await expenseCategoryService.getExpenseCategories(req.query);
 
   res.send({
     statusCode: httpStatus.OK,
     success: true,
-    message: "Customers fetched successfully",
+    message: success_msg.fetch("Expense categories"),
     data: result,
   });
 }
@@ -33,7 +26,9 @@ async function updateExpenseCategory(req, res) {
 }
 //
 async function deleteExpenseCategory(req, res) {
-  const result = await expenseCategoryService.deleteExpenseCategory(req.params.id);
+  const result = await expenseCategoryService.deleteExpenseCategory(
+    req.params.id
+  );
   res.send(result);
 }
 //

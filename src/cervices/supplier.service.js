@@ -14,30 +14,32 @@ const { operableEntities } = require("../config/constants");
 async function createSupplier(data) {
   try {
     const addResult = await Supplier.create(data);
-    return getCreateResponse({ data: addResult, what:operableEntities.supplier   });
+    return getCreateResponse({
+      data: addResult,
+      what: operableEntities.supplier,
+    });
   } catch (error) {
-    return getErrorResponse({error,what:operableEntities.supplier  });
+    return getErrorResponse({ error, what: operableEntities.supplier });
   }
 }
 //
-async function getSuppliers({
-  currentPage,
-  searchTerm,
-  viewLimit,
-  viewSkip,
-  sortBy,
-  sortOrder,
-}) {
-  const fetchResult = await Supplier.find({
-    title: { $regex: new RegExp(searchTerm, "i") },
-  })
+async function getSuppliers(query) {
+  const {
+    currentPage,
+    viewLimit,
+    viewSkip,
+    sortBy,
+    sortOrder,
+    filterConditions,
+    sortConditions,
+  } = getSearchAndPagination({ query, what: operableEntities.supplier });
+
+  const fetchResult = await Supplier.find(filterConditions)
+    .sort(sortConditions)
     .skip(viewSkip)
     .limit(viewLimit);
 
-  const total = await Supplier.countDocuments({
-    title: { $regex: new RegExp(searchTerm, "i") },
-  });
-
+  const total = await Supplier.countDocuments(filterConditions);
   return {
     meta: {
       total,
@@ -56,9 +58,12 @@ async function updateSupplier({ id, data }) {
     const editResult = await Supplier.findByIdAndUpdate(id, data, {
       new: true,
     });
-    return getUpdateResponse({ data: editResult, what:operableEntities.supplier  });
+    return getUpdateResponse({
+      data: editResult,
+      what: operableEntities.supplier,
+    });
   } catch (error) {
-    return getErrorResponse({error,what:operableEntities.supplier  });
+    return getErrorResponse({ error, what: operableEntities.supplier });
   }
 }
 //
@@ -67,7 +72,7 @@ async function deleteSupplier(id) {
     const deleteResult = await Supplier.findByIdAndDelete(id);
     return getDeletionResponse({ data: deleteResult, what: "Supplier" });
   } catch (error) {
-    return getErrorResponse({error,what:operableEntities.supplier  });
+    return getErrorResponse({ error, what: operableEntities.supplier });
   }
 }
 

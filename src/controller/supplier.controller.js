@@ -9,11 +9,10 @@ async function getSuppliers(req, res) {
   // pagination check & logic
 
   const result = await supplierService.getSuppliers(req.query);
-
   res.send({
     statusCode: httpStatus.OK,
     success: true,
-    message: "Addresses fetched successfully",
+    message: "Suppliers fetched successfully",
     data: result,
   });
 }

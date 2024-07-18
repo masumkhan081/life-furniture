@@ -23,24 +23,23 @@ async function createExpense(data) {
   }
 }
 //
-async function getExpenses({
-  currentPage,
-  searchTerm,
-  viewLimit,
-  viewSkip,
-  sortBy,
-  sortOrder,
-}) {
-  const fetchResult = await Expense.find({
-    title: { $regex: new RegExp(searchTerm, "i") },
-  })
+async function getExpenses(query) {
+  const {
+    currentPage,
+    viewLimit,
+    viewSkip,
+    sortBy,
+    sortOrder,
+    filterConditions,
+    sortConditions,
+  } = getSearchAndPagination({query,what:operableEntities.expense});
+
+  const fetchResult = await Expense.find(filterConditions)
+    .sort(sortConditions)
     .skip(viewSkip)
     .limit(viewLimit);
 
-  const total = await Expense.countDocuments({
-    title: { $regex: new RegExp(searchTerm, "i") },
-  });
-
+  const total = await Expense.countDocuments(filterConditions);
   return {
     meta: {
       total,

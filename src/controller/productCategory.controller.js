@@ -1,5 +1,6 @@
 const productCategoryService = require("../cervices/productCategory.service");
 const httpStatus = require("http-status");
+const { success_msg } = require("../utils/responseHandler");
 
 async function createProductCategory(req, res) {
   const result = await productCategoryService.createProductCategory(req.body);
@@ -7,20 +8,12 @@ async function createProductCategory(req, res) {
   res.send(result);
 }
 async function getProductCategories(req, res) {
-  // pagination check & logic
-  const { currentPage, searchTerm, viewLimit, viewSkip } = req.query;
-
-  const result = await productCategoryService.getProductCategories({
-    currentPage,
-    searchTerm,
-    viewLimit,
-    viewSkip,
-  });
+  const result = await productCategoryService.getProductCategories(req.query);
 
   res.send({
     statusCode: httpStatus.OK,
     success: true,
-    message: "ProductCategorys fetched successfully",
+    message: success_msg.fetch("Product categories"),
     data: result,
   });
 }

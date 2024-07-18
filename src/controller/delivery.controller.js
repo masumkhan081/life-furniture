@@ -1,19 +1,18 @@
 const deliveryService = require("../cervices/delivery.service");
 const httpStatus = require("http-status");
+const { success_msg } = require("../utils/responseHandler");
 
 async function createOrderDelivery(req, res) {
   const result = await deliveryService.createOrderDelivery(req.body);
   res.send(result);
 }
 async function getOrderDeliveries(req, res) {
-  // pagination check & logic
-
   const result = await deliveryService.getOrderDeliveries(req.query);
 
   res.send({
     statusCode: httpStatus.OK,
     success: true,
-    message: "Addresses fetched successfully",
+    message: success_msg.fetch("Order deliveries"),
     data: result,
   });
 }

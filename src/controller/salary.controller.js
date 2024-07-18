@@ -7,14 +7,12 @@ async function createSalary(req, res) {
 }
 
 async function getSalaries(req, res) {
-  // pagination check & logic
-
   const result = await salaryService.getAddresses(req.query);
 
   res.send({
     statusCode: httpStatus.OK,
     success: true,
-    message: "Addresses fetched successfully",
+    message: "Salaries fetched successfully",
     data: result,
   });
 }

@@ -32,7 +32,7 @@ async function getAddresses(query) {
     sortOrder,
     filterConditions,
     sortConditions,
-  } = getSearchAndPagination(query);
+  } = getSearchAndPagination({query,what:operableEntities.address});
 
   const fetchResult = await Address.find(filterConditions)
     .sort(sortConditions)

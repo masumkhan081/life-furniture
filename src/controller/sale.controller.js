@@ -6,14 +6,11 @@ async function createSale(req, res) {
   res.send(result);
 }
 async function getSales(req, res) {
-  // pagination check & logic
-
   const result = await saleService.getSales(req.query);
-
   res.send({
     statusCode: httpStatus.OK,
     success: true,
-    message: "Addresses fetched successfully",
+    message: "Sales fetched successfully",
     data: result,
   });
 }

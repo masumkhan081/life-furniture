@@ -6,10 +6,7 @@ async function createAddress(req, res) {
   res.send(result);
 }
 async function getAddresses(req, res) {
-  
-
   const result = await addressService.getAddresses(req.query);
-
   res.send({
     statusCode: httpStatus.OK,
     success: true,

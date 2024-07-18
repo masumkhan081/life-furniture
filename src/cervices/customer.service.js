@@ -43,24 +43,23 @@ async function createCustomer(data) {
   }
 }
 //
-async function getCustomers({
-  currentPage,
-  searchTerm,
-  viewLimit,
-  viewSkip,
-  sortBy,
-  sortOrder,
-}) {
-  const fetchResult = await Customer.find({
-    title: { $regex: new RegExp(searchTerm, "i") },
-  })
+async function getCustomers(query) {
+  const {
+    currentPage,
+    viewLimit,
+    viewSkip,
+    sortBy,
+    sortOrder,
+    filterConditions,
+    sortConditions,
+  } = getSearchAndPagination({query,what:operableEntities.customer});
+
+  const fetchResult = await Customer.find(filterConditions)
+    .sort(sortConditions)
     .skip(viewSkip)
     .limit(viewLimit);
 
-  const total = await Customer.countDocuments({
-    title: { $regex: new RegExp(searchTerm, "i") },
-  });
-
+  const total = await Customer.countDocuments(filterConditions);
   return {
     meta: {
       total,

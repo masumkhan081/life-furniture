@@ -20,24 +20,23 @@ async function createStock(data) {
   }
 }
 //
-async function getStocks({
-  currentPage,
-  searchTerm,
-  viewLimit,
-  viewSkip,
-  sortBy,
-  sortOrder,
-}) {
-  const fetchResult = await Stock.find({
-    title: { $regex: new RegExp(searchTerm, "i") },
-  })
+async function getStocks(query) {
+  const {
+    currentPage,
+    viewLimit,
+    viewSkip,
+    sortBy,
+    sortOrder,
+    filterConditions,
+    sortConditions,
+  } = getSearchAndPagination({query,what:operableEntities.stock});
+
+  const fetchResult = await Stock.find(filterConditions)
+    .sort(sortConditions)
     .skip(viewSkip)
     .limit(viewLimit);
 
-  const total = await Stock.countDocuments({
-    title: { $regex: new RegExp(searchTerm, "i") },
-  });
-
+  const total = await Stock.countDocuments(filterConditions);
   return {
     meta: {
       total,

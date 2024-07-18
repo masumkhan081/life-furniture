@@ -14,30 +14,32 @@ const { operableEntities } = require("../config/constants");
 async function createProductCategory(data) {
   try {
     const addResult = await ProductCategory.create(data);
-    return getCreateResponse({ data: addResult, what:operableEntities.product_category });
+    return getCreateResponse({
+      data: addResult,
+      what: operableEntities.product_category,
+    });
   } catch (error) {
-    return getErrorResponse({error,what:operableEntities.product_category  });
+    return getErrorResponse({ error, what: operableEntities.product_category });
   }
 }
 //
-async function getProductCategories({
-  currentPage,
-  searchTerm,
-  viewLimit,
-  viewSkip,
-  sortBy,
-  sortOrder,
-}) {
-  const fetchResult = await ProductCategory.find({
-    title: { $regex: new RegExp(searchTerm, "i") },
-  })
+async function getProductCategories(query) {
+  const {
+    currentPage,
+    viewLimit,
+    viewSkip,
+    sortBy,
+    sortOrder,
+    filterConditions,
+    sortConditions,
+  } = getSearchAndPagination({query,what:operableEntities.product_category});
+
+  const fetchResult = await ProductCategory.find(filterConditions)
+    .sort(sortConditions)
     .skip(viewSkip)
     .limit(viewLimit);
 
-  const total = await ProductCategory.countDocuments({
-    title: { $regex: new RegExp(searchTerm, "i") },
-  });
-
+  const total = await ProductCategory.countDocuments(filterConditions);
   return {
     meta: {
       total,
@@ -56,9 +58,12 @@ async function updateProductCategory({ id, data }) {
     const editResult = await ProductCategory.findByIdAndUpdate(id, data, {
       new: true,
     });
-    return getUpdateResponse({ data: editResult, what:operableEntities.product_category });
+    return getUpdateResponse({
+      data: editResult,
+      what: operableEntities.product_category,
+    });
   } catch (error) {
-    return getErrorResponse({error,what:operableEntities.product_category  });
+    return getErrorResponse({ error, what: operableEntities.product_category });
   }
 }
 //
@@ -67,10 +72,10 @@ async function deleteProductCategory(id) {
     const deleteResult = await ProductCategory.findByIdAndDelete(id);
     return getDeletionResponse({
       data: deleteResult,
-      what:operableEntities.product_category,
+      what: operableEntities.product_category,
     });
   } catch (error) {
-    return getErrorResponse({error,what:operableEntities.product_category  });
+    return getErrorResponse({ error, what: operableEntities.product_category });
   }
 }
 

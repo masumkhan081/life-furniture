@@ -20,24 +20,23 @@ async function createProduct(data) {
   }
 }
 //
-async function getProducts({
-  currentPage,
-  searchTerm,
-  viewLimit,
-  viewSkip,
-  sortBy,
-  sortOrder,
-}) {
-  const fetchResult = await Product.find({
-    title: { $regex: new RegExp(searchTerm, "i") },
-  })
+async function getProducts(query) {
+  const {
+    currentPage,
+    viewLimit,
+    viewSkip,
+    sortBy,
+    sortOrder,
+    filterConditions,
+    sortConditions,
+  } = getSearchAndPagination({query,what:operableEntities.product});
+
+  const fetchResult = await Product.find(filterConditions)
+    .sort(sortConditions)
     .skip(viewSkip)
     .limit(viewLimit);
 
-  const total = await Product.countDocuments({
-    title: { $regex: new RegExp(searchTerm, "i") },
-  });
-
+  const total = await Product.countDocuments(filterConditions);
   return {
     meta: {
       total,

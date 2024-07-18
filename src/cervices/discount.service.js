@@ -23,24 +23,23 @@ async function createDiscount(data) {
   }
 }
 
-async function getDiscounts({
-  currentPage,
-  searchTerm,
-  viewLimit,
-  viewSkip,
-  sortBy,
-  sortOrder,
-}) {
-  const fetchResult = await Discount.find({
-    title: { $regex: new RegExp(searchTerm, "i") },
-  })
+async function getDiscounts(query) {
+  const {
+    currentPage,
+    viewLimit,
+    viewSkip,
+    sortBy,
+    sortOrder,
+    filterConditions,
+    sortConditions,
+  } = getSearchAndPagination({query,what:operableEntities.});
+
+  const fetchResult = await Discount.find(filterConditions)
+    .sort(sortConditions)
     .skip(viewSkip)
     .limit(viewLimit);
 
-  const total = await Discount.countDocuments({
-    title: { $regex: new RegExp(searchTerm, "i") },
-  });
-
+  const total = await Discount.countDocuments(filterConditions);
   return {
     meta: {
       total,

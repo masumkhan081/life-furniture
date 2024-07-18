@@ -20,24 +20,23 @@ async function createSale(data) {
   }
 }
 //
-async function getSales({
-  currentPage,
-  searchTerm,
-  viewLimit,
-  viewSkip,
-  sortBy,
-  sortOrder,
-}) {
-  const fetchResult = await Sale.find({
-    title: { $regex: new RegExp(searchTerm, "i") },
-  })
+async function getSales(query) {
+  const {
+    currentPage,
+    viewLimit,
+    viewSkip,
+    sortBy,
+    sortOrder,
+    filterConditions,
+    sortConditions,
+  } = getSearchAndPagination({query,what:operableEntities.sale});
+
+  const fetchResult = await Sale.find(filterConditions)
+    .sort(sortConditions)
     .skip(viewSkip)
     .limit(viewLimit);
 
-  const total = await Sale.countDocuments({
-    title: { $regex: new RegExp(searchTerm, "i") },
-  });
-
+  const total = await Sale.countDocuments(filterConditions);
   return {
     meta: {
       total,

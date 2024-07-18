@@ -20,24 +20,23 @@ async function createOrder(data) {
   }
 }
 //
-async function getOrders({
-  currentPage,
-  searchTerm,
-  viewLimit,
-  viewSkip,
-  sortBy,
-  sortOrder,
-}) {
-  const fetchResult = await Order.find({
-    title: { $regex: new RegExp(searchTerm, "i") },
-  })
+async function getOrders(query) {
+  const {
+    currentPage,
+    viewLimit,
+    viewSkip,
+    sortBy,
+    sortOrder,
+    filterConditions,
+    sortConditions,
+  } = getSearchAndPagination({query,what:operableEntities.order});
+
+  const fetchResult = await Order.find(filterConditions)
+    .sort(sortConditions)
     .skip(viewSkip)
     .limit(viewLimit);
 
-  const total = await Order.countDocuments({
-    title: { $regex: new RegExp(searchTerm, "i") },
-  });
-
+  const total = await Order.countDocuments(filterConditions);
   return {
     meta: {
       total,

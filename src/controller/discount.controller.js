@@ -1,5 +1,6 @@
 const discountService = require("../cervices/discount.service");
 const httpStatus = require("http-status");
+const { success_msg } = require("../utils/responseHandler");
 
 async function createDiscount(req, res) {
   const result = await discountService.createDiscount(req.body);
@@ -9,11 +10,10 @@ async function getDiscounts(req, res) {
   // pagination check & logic
 
   const result = await discountService.getDiscounts(req.query);
-
   res.send({
     statusCode: httpStatus.OK,
     success: true,
-    message: "Discountes fetched successfully",
+    message: success_msg.fetch("Discounts"),
     data: result,
   });
 }

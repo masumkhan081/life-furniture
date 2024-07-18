@@ -1,5 +1,6 @@
 const { operableEntities } = require("../config/constants");
 const Salesman = require("../models/salesman.model");
+const { getSearchAndPagination } = require("../utils/pagination");
 const {
   getUpdateResponse,
   getDeletionResponse,
@@ -17,24 +18,23 @@ async function createSalesman(data) {
   }
 }
 //
-async function getSalesmen({
-  currentPage,
-  searchTerm,
-  viewLimit,
-  viewSkip,
-  sortBy,
-  sortOrder,
-}) {
-  const fetchResult = await Salesman.find({
-    title: { $regex: new RegExp(searchTerm, "i") },
-  })
+async function getSalesmen(query) {
+  const {
+    currentPage,
+    viewLimit,
+    viewSkip,
+    sortBy,
+    sortOrder,
+    filterConditions,
+    sortConditions,
+  } = getSearchAndPagination({query,what:operableEntities.salesman});
+
+  const fetchResult = await Salesman.find(filterConditions)
+    .sort(sortConditions)
     .skip(viewSkip)
     .limit(viewLimit);
 
-  const total = await Salesman.countDocuments({
-    title: { $regex: new RegExp(searchTerm, "i") },
-  });
-
+  const total = await Salesman.countDocuments(filterConditions);
   return {
     meta: {
       total,

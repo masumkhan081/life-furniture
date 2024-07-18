@@ -1,31 +1,24 @@
-const CustomerService = require("../cervices/customer.service");
+const expenseService = require("../cervices/expense.service");
 const httpStatus = require("http-status");
+const { success_msg } = require("../utils/responseHandler");
 
 async function createExpense(req, res) {
-  const result = await CustomerService.createCustomer(req.body);
+  const result = await expenseService.createExpense(req.body);
   res.send(result);
 }
 async function getExpenses(req, res) {
-  // pagination check & logic
-  const { currentPage, searchTerm, viewLimit, viewSkip } = req.query;
-
-  const result = await CustomerService.getCustomers({
-    currentPage,
-    searchTerm,
-    viewLimit,
-    viewSkip,
-  });
+  const result = await expenseService.getExpenses(req.query);
 
   res.send({
     statusCode: httpStatus.OK,
     success: true,
-    message: "Customers fetched successfully",
+    message: success_msg.fetch("Expenses"),
     data: result,
   });
 }
 //
 async function updateExpense(req, res) {
-  const result = await CustomerService.updateCustomer({
+  const result = await expenseService.updateExpense({
     id: req.params.id,
     data: req.body,
   });
@@ -33,7 +26,7 @@ async function updateExpense(req, res) {
 }
 //
 async function deleteExpense(req, res) {
-  const result = await CustomerService.deleteCustomer(req.params.id);
+  const result = await expenseService.deleteExpense(req.params.id);
   res.send(result);
 }
 //

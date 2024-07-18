@@ -1,12 +1,9 @@
 /* eslint-disable no-empty */
 /* eslint-disable no-unused-vars */
 
-const {
-  defaultViewLimit,
-  address_searchables,
-} = require("../config/constants");
+const { defaultViewLimit, map_searchables } = require("../config/constants");
 
-function getSearchAndPagination(query) {
+function getSearchAndPagination({ query: query, what }) {
   const { search, page, limit, search_by, sort_by, sort_order } = query;
 
   // sorting data with a particular field and order or by taking prefined defaults in this regard
@@ -40,13 +37,13 @@ function getSearchAndPagination(query) {
   let sortConditions = { [sortBy]: sortOrder };
   let filterData;
 
-  for (let i = 0; i < address_searchables.length; i++) {
-    filterData = query[address_searchables[i]];
+  for (let i = 0; i < map_searchables[what].length; i++) {
+    filterData = query[map_searchables[what][i]];
     if (filterData !== undefined && filterData !== "") {
-      filterConditions[address_searchables[i]] = filterData;
+      filterConditions[map_searchables[what][i]] = filterData;
     } else {
       searchConditions.push({
-        [address_searchables[i]]: { $regex: new RegExp(searchTerm, "i") },
+        [map_searchables[what][i]]: { $regex: new RegExp(searchTerm, "i") },
       });
     }
   }

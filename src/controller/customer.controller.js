@@ -6,15 +6,7 @@ async function createCustomer(req, res) {
   res.send(result);
 }
 async function getCustomers(req, res) {
-  // pagination check & logic
-  const { currentPage, searchTerm, viewLimit, viewSkip } = req.query;
-
-  const result = await CustomerService.getCustomers({
-    currentPage,
-    searchTerm,
-    viewLimit,
-    viewSkip,
-  });
+  const result = await CustomerService.getCustomers(req.query);
 
   res.send({
     statusCode: httpStatus.OK,

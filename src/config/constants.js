@@ -18,6 +18,7 @@ const operableEntities = {
   expense_category: "Expense category",
   salary: "salary",
   user: "user",
+  showroom: "showroom",	
 };
 
 const paginationFields = ["page", "limit", "sortBy", "sortOrder"];
@@ -25,37 +26,53 @@ const defaultViewLimit = 10;
 const defaultSortOrder = "desc";
 
 // may be changed based on the outcome expected
-const defaultSortBy = {
-  address: "address",
-  product: "product",
-  customer: "customer",
-  supplier: "supplier",
-  product_category: "product_category",
-  order: "order",
-  purchase: "purchase",
-  stock: "stock",
-  discount: "discount",
-  sale: "sale",
-  delivery: "delivery",
-  salesman: "salesman",
-  expense: "expense",
-  expense_category: "expense_category",
-  salary: "salary",
+const map_default_sort_by = {
+  [operableEntities.address]: "address",
+  [operableEntities.product]: "product",
+  [operableEntities.customer]: "customer",
+  [operableEntities.supplier]: "supplier",
+  [operableEntities.product_category]: "product_category",
+  [operableEntities.order]: "order",
+  [operableEntities.purchase]: "purchase",
+  [operableEntities.stock]: "stock",
+  [operableEntities.discount]: "discount",
+  [operableEntities.sale]: "sale",
+  [operableEntities.delivery]: "delivery",
+  [operableEntities.salesman]: "salesman",
+  [operableEntities.expense]: "expense",
+  [operableEntities.expense_category]: "expense_category",
+  [operableEntities.salary]: "salary",
 };
 
-const address_searchables = [
-  "district",
-  "subdistrict",
-  "village",
-  "street",
-  "building",
-];
+const map_searchables = {
+  [operableEntities.address]: [
+    "district",
+    "subdistrict",
+    "village",
+    "street",
+    "building",
+  ],
+  [operableEntities.expense_category]: ["name"],
+  [operableEntities.product]: ["name"],
+  [operableEntities.customer]: ["name"],
+  [operableEntities.supplier]: ["name"],
+  [operableEntities.product_category]: ["name"],
+  [operableEntities.order]: ["name"],
+  [operableEntities.purchase]: ["name"],
+  [operableEntities.stock]: ["name"],
+  [operableEntities.discount]: ["name"],
+  [operableEntities.sale]: ["name"],
+  [operableEntities.delivery]: ["name"],
+  [operableEntities.salesman]: ["name"],
+  [operableEntities.expense]: ["name"],
+  [operableEntities.salary]: "salary",
+};
 
 module.exports = {
   paginationFields,
   defaultViewLimit,
-  address_searchables,
+  map_searchables,
   defaultSortOrder,
-  defaultSortBy,
+  map_default_sort_by,
   operableEntities,
 };
