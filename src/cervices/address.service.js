@@ -10,14 +10,16 @@ const {
   getDeletionResponse,
   getUpdateResponse,
 } = require("../utils/responseHandler");
- 
 
 async function createAddress(data) {
   try {
     const addResult = await Address.create(data);
-    return getCreateResponse({ data: addResult, what:operableEntities.address });
+    return getCreateResponse({
+      data: addResult,
+      what: operableEntities.address,
+    });
   } catch (error) {
-    return getErrorResponse({error,what:operableEntities.address  });
+    return getErrorResponse({ error, what: operableEntities.address });
   }
 }
 //
@@ -56,18 +58,24 @@ async function updateAddress({ id, data }) {
     const editResult = await Address.findByIdAndUpdate(id, data, {
       new: true,
     });
-    return getUpdateResponse({ data: editResult, what:operableEntities.address });
+    return getUpdateResponse({
+      data: editResult,
+      what: operableEntities.address,
+    });
   } catch (error) {
-    return getErrorResponse({error,what:operableEntities.address  });
+    return getErrorResponse({ error, what: operableEntities.address });
   }
 }
 //
 async function deleteAddress(id) {
   try {
     const deleteResult = await Address.findByIdAndDelete(id);
-    return getDeletionResponse({ data: deleteResult, what:operableEntities.address });
+    return getDeletionResponse({
+      data: deleteResult,
+      what: operableEntities.address,
+    });
   } catch (error) {
-    return getErrorResponse({error,what:operableEntities.address  });
+    return getErrorResponse({ error, what: operableEntities.address });
   }
 }
 

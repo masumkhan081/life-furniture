@@ -1,17 +1,17 @@
-const showroomServices = require("../cervices/showroom.service");
+const stockServices = require("../cervices/stock.service");
 const httpStatus = require("http-status");
 const { getSearchAndPagination } = require("../utils/pagination");
 
-async function createshowroom(req, res) {
-  const result = await showroomServices.createshowroom(req.body);
+async function createStock(req, res) {
+  const result = await stockServices.createStock(req.body);
   res.send(result);
 }
-async function getshowrooms(req, res) {
+async function getStocks(req, res) {
   // pagination check & logic
   const { currentPage, searchTerm, viewLimit, viewSkip } =
     getSearchAndPagination(req.query);
 
-  const result = await showroomServices.getshowrooms({
+  const result = await stockServices.getStocks({
     currentPage,
     searchTerm,
     viewLimit,
@@ -24,8 +24,8 @@ async function getshowrooms(req, res) {
     data: result,
   });
 }
-async function updateshowroom(req, res) {
-  const result = await showroomServices.updateshowroom({
+async function updateStock(req, res) {
+  const result = await stockServices.updateStock({
     id: req.params.id,
     data: req.body,
   });
@@ -36,8 +36,8 @@ async function updateshowroom(req, res) {
     data: result,
   });
 }
-async function deleteshowroom(req, res) {
-  const result = await showroomServices.deleteshowroom(req.params.id);
+async function deleteStock(req, res) {
+  const result = await stockServices.deleteStock(req.params.id);
   res.send({
     statusCode: httpStatus.OK,
     success: true,
@@ -46,4 +46,9 @@ async function deleteshowroom(req, res) {
   });
 }
 
-module.exports = { createshowroom, updateshowroom, deleteshowroom, getshowrooms };
+module.exports = {
+  createStock,
+  updateStock,
+  deleteStock,
+  getStocks,
+};

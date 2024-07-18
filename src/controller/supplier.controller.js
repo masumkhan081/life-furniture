@@ -2,13 +2,13 @@ const supplierService = require("../cervices/supplier.service");
 const httpStatus = require("http-status");
 
 async function createSupplier(req, res) {
-  const result = await supplierService.createAddress(req.body);
+  const result = await supplierService.createSupplier(req.body);
   res.send(result);
 }
 async function getSuppliers(req, res) {
   // pagination check & logic
 
-  const result = await supplierService.getAddresses(req.query);
+  const result = await supplierService.getSuppliers(req.query);
 
   res.send({
     statusCode: httpStatus.OK,
@@ -19,7 +19,7 @@ async function getSuppliers(req, res) {
 }
 //
 async function updateSupplier(req, res) {
-  const result = await supplierService.updateAddress({
+  const result = await supplierService.updateSupplier({
     id: req.params.id,
     data: req.body,
   });
@@ -27,7 +27,7 @@ async function updateSupplier(req, res) {
 }
 //
 async function deleteSupplier(req, res) {
-  const result = await supplierService.deleteAddress(req.params.id);
+  const result = await supplierService.deleteSupplier(req.params.id);
   res.send(result);
 }
 //

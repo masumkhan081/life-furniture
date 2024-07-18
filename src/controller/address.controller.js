@@ -6,7 +6,7 @@ async function createAddress(req, res) {
   res.send(result);
 }
 async function getAddresses(req, res) {
-  // pagination check & logic
+  
 
   const result = await addressService.getAddresses(req.query);
 

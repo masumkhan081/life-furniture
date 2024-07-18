@@ -70,15 +70,14 @@ async function getUsers({
 }
 //
 async function updateUser({ id, data }) {
-  
-   try {
+  try {
     const editResult = await userModel.findByIdAndUpdate(id, data, {
       new: true,
     });
     return getUpdateResponse({ data: editResult, what: "User" });
   } catch (error) {
-    return getErrorResponse({error,what:operableEntities.user   });
-  };
+    return getErrorResponse({ error, what: operableEntities.user });
+  }
 }
 //
 async function deleteUser(id) {
@@ -86,7 +85,7 @@ async function deleteUser(id) {
     const deleteResult = await userModel.findByIdAndDelete(id);
     return getDeletionResponse({ data: deleteResult, what: "User" });
   } catch (error) {
-    return getErrorResponse({error,what:operableEntities.user  });
+    return getErrorResponse({ error, what: operableEntities.user });
   }
 }
 

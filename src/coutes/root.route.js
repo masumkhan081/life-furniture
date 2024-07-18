@@ -1,11 +1,12 @@
 /* eslint-disable no-unused-vars */
 const { Router } = require("express");
+// all the routes involved in this project
 const userRoutes = require("./user.route");
 const addressRoutes = require("./address.route");
 const showroomRoutes = require("./showroom.route");
 const productCategoryRoutes = require("./productCategory.route");
 const productRoutes = require("./product.route");
-const dashboardRoutes = require("./dashboard.route");
+// const dashboardRoutes = require("./dashboard.route");
 const supplierRoutes = require("./supplier.route");
 const orderRoutes = require("./order.route");
 const purchaseRoutes = require("./purchase.route");
@@ -74,7 +75,7 @@ const routes = [
     path: "/customers",
     route: customerRoutes,
   },
-  
+
   {
     path: "/customers",
     route: discountRoutes,
@@ -91,10 +92,10 @@ const routes = [
     path: "/expenses",
     route: expenseRoutes,
   },
-  {
-    path: "/dashboard",
-    route: dashboardRoutes,
-  },
+  // {
+  //   path: "/dashboard",
+  //   route: dashboardRoutes,
+  // },
 ];
 
 routes.forEach((route) => router.use(route?.path, route?.route));

@@ -1,39 +1,39 @@
-const addressService = require("../cervices/address.service");
+const discountService = require("../cervices/discount.service");
 const httpStatus = require("http-status");
 
-async function createAddress(req, res) {
-  const result = await addressService.createAddress(req.body);
+async function createDiscount(req, res) {
+  const result = await discountService.createDiscount(req.body);
   res.send(result);
 }
-async function getAddresses(req, res) {
+async function getDiscounts(req, res) {
   // pagination check & logic
 
-  const result = await addressService.getAddresses(req.query);
+  const result = await discountService.getDiscounts(req.query);
 
   res.send({
     statusCode: httpStatus.OK,
     success: true,
-    message: "Addresses fetched successfully",
+    message: "Discountes fetched successfully",
     data: result,
   });
 }
 //
-async function updateAddress(req, res) {
-  const result = await addressService.updateAddress({
+async function updateDiscount(req, res) {
+  const result = await discountService.updateDiscount({
     id: req.params.id,
     data: req.body,
   });
   res.send(result);
 }
 //
-async function deleteAddress(req, res) {
-  const result = await addressService.deleteAddress(req.params.id);
+async function deleteDiscount(req, res) {
+  const result = await discountService.deleteDiscount(req.params.id);
   res.send(result);
 }
 //
 module.exports = {
-  createAddress,
-  updateAddress,
-  deleteAddress,
-  getAddresses,
+  createDiscount,
+  updateDiscount,
+  deleteDiscount,
+  getDiscounts,
 };

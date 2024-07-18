@@ -33,7 +33,7 @@ async function updateExpenseCategory(req, res) {
 }
 //
 async function deleteExpenseCategory(req, res) {
-  const result = await expenseCategoryService.deleteCustomer(req.params.id);
+  const result = await expenseCategoryService.deleteExpenseCategory(req.params.id);
   res.send(result);
 }
 //

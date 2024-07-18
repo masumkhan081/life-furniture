@@ -1,11 +1,11 @@
 const { Router } = require("express");
 const router = Router();
-const addressController = require("../controller/address.controller");
+const stockController = require("../controller/stock.controller");
 //
 
-router.post("/", addressController.createAddress);
-router.get("/", addressController.getAddresses);
-router.patch("/:id", addressController.updateAddress);
-router.delete("/:id", addressController.deleteAddress);
+router.post("/", stockController.createStock);
+router.get("/", stockController.getStocks);
+router.patch("/:id", stockController.updateStock);
+router.delete("/:id", stockController.deleteStock);
 
 module.exports = router;
