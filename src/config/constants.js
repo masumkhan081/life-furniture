@@ -13,12 +13,12 @@ const operableEntities = {
   sale: "sale",
   sale_return: "Sale return",
   delivery: "delivery",
-  salesman: "salesman",
+  employee: "employee",
   expense: "expense",
   expense_category: "Expense category",
   salary: "salary",
   user: "user",
-  showroom: "showroom",	
+  showroom: "showroom",
 };
 
 const paginationFields = ["page", "limit", "sortBy", "sortOrder"];
@@ -38,10 +38,11 @@ const map_default_sort_by = {
   [operableEntities.discount]: "discount",
   [operableEntities.sale]: "sale",
   [operableEntities.delivery]: "delivery",
-  [operableEntities.salesman]: "salesman",
+  [operableEntities.employee]: "full_name",
   [operableEntities.expense]: "expense",
   [operableEntities.expense_category]: "expense_category",
   [operableEntities.salary]: "salary",
+  [operableEntities.showroom]: "showroom",
 };
 
 const map_searchables = {
@@ -55,7 +56,7 @@ const map_searchables = {
   [operableEntities.expense_category]: ["name"],
   [operableEntities.product]: ["name"],
   [operableEntities.customer]: ["name"],
-  [operableEntities.supplier]: ["name"],
+  [operableEntities.supplier]: ["supplier_name", "mobile", "phone", "email"],
   [operableEntities.product_category]: ["name"],
   [operableEntities.order]: ["name"],
   [operableEntities.purchase]: ["name"],
@@ -63,9 +64,10 @@ const map_searchables = {
   [operableEntities.discount]: ["name"],
   [operableEntities.sale]: ["name"],
   [operableEntities.delivery]: ["name"],
-  [operableEntities.salesman]: ["name"],
+  [operableEntities.employee]: ["full_name","mobile"],
   [operableEntities.expense]: ["name"],
-  [operableEntities.salary]: "salary",
+  [operableEntities.salary]: ["salary"],
+  [operableEntities.showroom]: ["title"],
 };
 
 module.exports = {

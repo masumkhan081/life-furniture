@@ -37,19 +37,32 @@ function getSearchAndPagination({ query: query, what }) {
   let sortConditions = { [sortBy]: sortOrder };
   let filterData;
 
-  for (let i = 0; i < map_searchables[what].length; i++) {
+  for (let i = 0; i < map_searchables[what]?.length; i++) {
     filterData = query[map_searchables[what][i]];
     if (filterData !== undefined && filterData !== "") {
       filterConditions[map_searchables[what][i]] = filterData;
-    } else {
-      searchConditions.push({
-        [map_searchables[what][i]]: { $regex: new RegExp(searchTerm, "i") },
-      });
+    } else if (searchTerm) {
+      if (searchBy === "whole") {
+        searchConditions.push({
+          [map_searchables[what][i]]: { $regex: new RegExp(searchTerm, "i") },
+        });
+      } else {
+        searchConditions.push({
+          [searchBy]: { $regex: new RegExp(searchTerm, "i") },
+        });
+      }
     }
   }
-  filterConditions["$or"] = searchConditions;
 
-  console.log(JSON.stringify(filterConditions));
+  searchConditions.length > 0
+    ? (filterConditions["$or"] = searchConditions)
+    : searchConditions;
+
+  // console.log(
+  //   JSON.stringify(searchConditions) +
+  //     "  filterConditions:   " +
+  //     JSON.stringify(filterConditions)
+  // );
 
   return {
     currentPage,

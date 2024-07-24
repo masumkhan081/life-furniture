@@ -52,7 +52,7 @@ async function getCustomers(query) {
     sortOrder,
     filterConditions,
     sortConditions,
-  } = getSearchAndPagination({query,what:operableEntities.customer});
+  } = getSearchAndPagination({ query, what: operableEntities.customer });
 
   const fetchResult = await Customer.find(filterConditions)
     .sort(sortConditions)

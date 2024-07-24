@@ -1,25 +1,29 @@
 const { Schema, model } = require("mongoose");
 const mongoose = require("mongoose");
 
-const salesmenSchema = new Schema(
+const employeeSchema = new Schema(
   {
-    userInfo: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "users",
-      required: true,
-    },
     full_name: {
       type: String,
       required: true,
       unique: true,
     },
-    mobile: { type: String, required: false },
+    mobile: { type: String, required: true },
     address: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "addresses",
       required: true,
     },
     salary: { type: Number, required: false },
+    is_user: {
+      type: Boolean,
+      default: false,
+    },
+    user_id: {
+      type: String,
+      required: false,
+      default: null,
+    },
   },
   {
     timestamps: true,
@@ -28,6 +32,6 @@ const salesmenSchema = new Schema(
   }
 );
 
-const Salesman = model("salesmen", salesmenSchema);
+const Employee = model("employees", employeeSchema);
 
-module.exports = Salesman;
+module.exports = Employee;

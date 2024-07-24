@@ -5,6 +5,7 @@ async function createShowroom(req, res) {
   const result = await showroomServices.createShowroom(req.body);
   res.send(result);
 }
+
 async function getShowrooms(req, res) {
   const result = await showroomServices.getShowrooms(req.query);
   res.send({
@@ -14,6 +15,7 @@ async function getShowrooms(req, res) {
     data: result,
   });
 }
+
 async function updateShowroom(req, res) {
   const result = await showroomServices.updateShowroom({
     id: req.params.id,

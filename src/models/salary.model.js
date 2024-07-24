@@ -14,9 +14,9 @@ const salaryGiving = new Schema({
 
 const salarySchema = new Schema(
   {
-    salesman: {
+    employee: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "salesmen",
+      ref: "employees",
       required: true,
     },
     month: {

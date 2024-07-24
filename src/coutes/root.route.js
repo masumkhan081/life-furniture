@@ -15,7 +15,7 @@ const discountRoutes = require("./discount.route");
 const saleRoutes = require("./sale.route");
 const deliveryRoutes = require("./delivery.route");
 const customerRoutes = require("./customer.route");
-const salesmenRoutes = require("./salesman.route");
+const employeeRoutes = require("./employee.route");
 const salaryRoutes = require("./salary.route");
 const expenseCategoryRoutes = require("./expenseCategory.route");
 const expenseRoutes = require("./expense.route");
@@ -32,8 +32,8 @@ const routes = [
     route: showroomRoutes,
   },
   {
-    path: "/salesmen",
-    route: salesmenRoutes,
+    path: "/employees",
+    route: employeeRoutes,
   },
   {
     path: "/addresses",

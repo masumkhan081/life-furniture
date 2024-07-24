@@ -104,6 +104,18 @@ for (let i = 0; i < 64; i++) {
   jsonSamples.push(generateAddress(i));
 }
 
-console.log(jsonSamples);
+// console.log(jsonSamples);
 
+const t = "";
+const t2 = undefined;
 
+fn();
+
+function fn() {
+  if (t) {
+    console.log("if - 1");
+  }
+  if (t2) {
+    console.log("if - 2");
+  }
+}
