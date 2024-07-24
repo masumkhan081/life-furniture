@@ -70,11 +70,13 @@ const map_searchables = {
   [operableEntities.showroom]: ["title"],
 };
 
+ 
+
 module.exports = {
   paginationFields,
   defaultViewLimit,
   map_searchables,
   defaultSortOrder,
   map_default_sort_by,
-  operableEntities,
+  operableEntities, 
 };
