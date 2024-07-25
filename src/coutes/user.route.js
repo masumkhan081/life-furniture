@@ -1,9 +1,10 @@
 const { Router } = require("express");
 const router = Router();
 const userController = require("../controller/user.controller.js");
+const accessControl = require("../middlewares/verifyToken.js");
 
 // when super-admin creates user account for a salesman
-router.post("/", userController.createUser); 
+router.post("/", accessControl("admin"), userController.createUser);
 router.get("/", userController.getUsers);
 router.patch("/:id", userController.updateUser);
 router.delete("/:id", userController.deleteUser);

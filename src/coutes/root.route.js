@@ -19,10 +19,15 @@ const employeeRoutes = require("./employee.route");
 const salaryRoutes = require("./salary.route");
 const expenseCategoryRoutes = require("./expenseCategory.route");
 const expenseRoutes = require("./expense.route");
+const authRoutes = require("./auth.route");
 
 const router = Router();
 
 const routes = [
+  {
+    path: "/auth",
+    route: authRoutes,
+  },
   {
     path: "/users",
     route: userRoutes,

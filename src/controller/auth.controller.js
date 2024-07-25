@@ -35,17 +35,9 @@ async function createUser(req, res) {
 }
 
 async function login(req, res) {
-  // destructuring the expected
+  // destructering the expected
   const { username, password } = req.body;
-  // validation to be placed here
-
-  const result = await authService.login({ res, username, password });
-  res.send({
-    statusCode: httpStatus.OK,
-    success: true,
-    message: "User logged in successfully",
-    data: result,
-  });
+  authService.login({ res, username, password });
 }
 
 async function logout(req, res) {

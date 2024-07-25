@@ -5,9 +5,7 @@ const authController = require("../controller/auth.controller.js");
 // when super-admin creates user account for a salesman
 router.post("/", authController.createUser);
 
-router.post("/login", (req, res) => {
-  authController.login(req, res);
-});
+router.post("/login", authController.login)
 
 router.get("/logout", authController.logout);
 

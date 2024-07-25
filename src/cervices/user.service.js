@@ -1,6 +1,7 @@
 const User = require("../models/user.model");
 /* eslint-disable no-unused-vars */
 const { getSearchAndPagination } = require("../utils/pagination");
+const config = require("../config/index");
 const {
   success_msg,
   getErrorResponse,
@@ -10,16 +11,20 @@ const {
   getUpdateResponse,
 } = require("../utils/responseHandler");
 const { operableEntities } = require("../config/constants");
+const bcrypt = require("bcrypt");
 
 async function createUser(data) {
   try {
+    const salt = await bcrypt.genSalt(); // 10 is the number of salt rounds
+    // Hash the password with the salt
+    data.password = await bcrypt.hash(data.password, salt);
     const addResult = await User.create(data);
     return getCreateResponse({
       data: addResult,
-      what: operableEntities.supplier,
+      what: operableEntities.user,
     });
   } catch (error) {
-    return getErrorResponse({ error, what: operableEntities.supplier });
+    return getErrorResponse({ error, what: operableEntities.user });
   }
 }
 

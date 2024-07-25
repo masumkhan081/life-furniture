@@ -16,14 +16,17 @@ const {
 } = require("../utils/responseHandler");
 const { operableEntities } = require("../config/constants");
 
-async function createUser({ res, username, email, phone, password }) {
-  // already registered or not
+const jwt = require("jsonwebtoken");
 
-  const hash = await bcrypt.hash(password, 10);
+async function createUser({ res, username, email, phone, password }) {
+  const salt = await bcrypt.genSalt(10); // 10 is the number of salt rounds
+
+  // Hash the password with the salt
+  const hashedPassword = await bcrypt.hash(password, salt);
   const user = await new userModel({
     username,
     email,
-    password: hash,
+    password: hashedPassword,
     phone,
   }).save();
 
@@ -35,6 +38,69 @@ async function createUser({ res, username, email, phone, password }) {
   //       successMessage: "An OTP has been sent to your email for verification.",
   //     })
   //   : res.status(400).send("Error creating account");
+}
+
+async function login({ res, username, password }) {
+  // registered or not
+  const user = await userModel.findOne({ userName: username });
+
+  if (user) {
+    // email and associated password matched and verified
+    console.log(
+      JSON.stringify(password),
+      "   ---   " + JSON.stringify(user.password)
+    );
+
+    const bool = await bcrypt.compare(password, user.password);
+    // console.log(JSON.stringify(bool));
+
+    if (bool) {
+      if (user.isVerified) {
+        res
+          .status(200)
+          .cookie(
+            config.tkn_header_key,
+            jwt.sign(
+              { user_id: user.id, role: user.role },
+              config.jwt_secret,
+              config.jwt_options
+            ),
+            {
+              expire: 2628000000 + Date.now(),
+            }
+          )
+          .send({
+            nextPage: true,
+            message: "You are logged in",
+            email: user.email,
+            phone: user.phone,
+            userName: user.userName,
+            role: user.role,
+          });
+      }
+      // doesn't go with out current project
+      // email and associated password matched but email not-verified yet
+      // else {
+      //   mailService.sendOTPMail({
+      //     user,
+      //     res,
+      //     successMessage:
+      //       "Account not verified yet. We sent an OTP to your email for verification.",
+      //   });
+      // }
+    } else {
+      res.status(400).send({ nextPage: false, message: "Wrong Credentialss" });
+    }
+  }
+  // no user with that username in system
+  else {
+    res.status(400).send({ nextPage: false, message: "Wrong Credentials" });
+  }
+}
+
+async function logout(req, res) {
+  res.clearCookie(config.tkn_header_key);
+  res.status(200).send("Dick Pulled Out Succesfully");
 }
 //
 async function getUsers({
@@ -87,60 +153,6 @@ async function deleteUser(id) {
   } catch (error) {
     return getErrorResponse({ error, what: operableEntities.user });
   }
-}
-
-async function login({ res, username, password }) {
-  // registered or not
-  const user = await userModel.findOne({ username });
-
-  if (user) {
-    // email and associated password matched and verified
-    const bool = await bcrypt.compare(password, user.password);
-
-    if (bool) {
-      if (user.isVerified) {
-        res
-          .status(200)
-          .cookie(
-            config.tkn_header_key,
-            JSON.stringify({
-              id: user.id,
-            }),
-            {
-              expire: 360000 + Date.now(),
-            }
-          )
-          .send({
-            nextPage: true,
-            message: "You are logged in",
-            email: user.email,
-            phone: user.phone,
-            fullName: user.fullName,
-          });
-      }
-      // doesn't go with out current project
-      // email and associated password matched but email not-verified yet
-      else {
-        mailService.sendOTPMail({
-          user,
-          res,
-          successMessage:
-            "Account not verified yet. We sent an OTP to your email for verification.",
-        });
-      }
-    } else {
-      res.status(400).send({ nextPage: false, message: "Wrong Credentials" });
-    }
-  }
-  // no user with that email in system
-  else {
-    res.status(400).send({ nextPage: false, message: "Wrong Credentials" });
-  }
-}
-
-async function logout(req, res) {
-  res.clearCookie(config.tkn_header_key);
-  res.status(200).send("Dick Pulled Out Succesfully");
 }
 
 async function sendResetMail(req, res) {
