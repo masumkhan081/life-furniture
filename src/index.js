@@ -10,7 +10,9 @@ async function bootstrap() {
     await mongodbConnection();
   });
 
-  app.get;
+  app.get("/", (req, res) => {
+    res.send("Welcome .. ");
+  });
 
   const exitHandler = () => {
     if (server) {

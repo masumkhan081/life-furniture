@@ -34,10 +34,6 @@ app.get("/", (req, res) => {
   });
 });
 
-app.get("/hello", (req, res) => {
-  res.send("hi-hello world");
-});
-
 app.use("/", RootRoutes);
 
 app.use((req, res, next) => {
