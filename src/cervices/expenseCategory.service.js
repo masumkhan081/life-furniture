@@ -14,6 +14,7 @@ const {
 async function createExpenseCategory(data) {
   try {
     const addResult = await ExpenseCategory.create(data);
+    console.log("addResult: " + JSON.stringify(addResult));
     return getCreateResponse({
       data: addResult,
       what: operableEntities.expense_category,

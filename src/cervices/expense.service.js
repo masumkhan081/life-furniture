@@ -10,7 +10,7 @@ const {
   getUpdateResponse,
 } = require("../utils/responseHandler");
 const { operableEntities } = require("../config/constants");
-
+//
 async function createExpense(data) {
   try {
     const addResult = await Expense.create(data);
@@ -32,9 +32,10 @@ async function getExpenses(query) {
     sortOrder,
     filterConditions,
     sortConditions,
-  } = getSearchAndPagination({query,what:operableEntities.expense});
+  } = getSearchAndPagination({ query, what: operableEntities.expense });
 
   const fetchResult = await Expense.find(filterConditions)
+    .populate("category")
     .sort(sortConditions)
     .skip(viewSkip)
     .limit(viewLimit);

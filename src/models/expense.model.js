@@ -10,7 +10,7 @@ const expenseDetailSchema = new Schema({
 const expenseSchema = new Schema(
   {
     title: {
-      type: Number,
+      type: String,
       required: true,
     },
     showroom: {

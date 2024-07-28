@@ -9,10 +9,15 @@ const mongoose = require("mongoose");
 //   id: String,
 // });
 
+const sizeSchema = new Schema({
+  height: String,
+  length: String,
+  width: String,
+});
+
 const productSchema = new Schema(
   {
-    product_id: String,
-    title: {
+    name: {
       type: String,
       required: true,
       unique: true,
@@ -22,15 +27,17 @@ const productSchema = new Schema(
       ref: "categories",
       required: true,
     },
-    detail: {
-      type: String,
-      required: true,
+    brand: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "brands",
+      required: false,
     },
-    size: {
-      type: String,
-      required: true,
-    },
+    size: sizeSchema,
     images: [String],
+    description: {
+      type: String,
+      required: true,
+    },
     slugs: [String],
   },
   {
@@ -43,3 +50,19 @@ const productSchema = new Schema(
 const Product = model("products", productSchema);
 
 module.exports = Product;
+
+/*
+probable furniture sizing parameters:
+
+Height
+Width
+Depth
+Seat Height
+Arm Height
+Back Height
+Leg Height
+Clearance or Space
+Weight Capacity
+Volume
+
+*/

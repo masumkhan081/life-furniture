@@ -1,17 +1,17 @@
-/* eslint-disable no-unused-vars */
 const { Schema, model } = require("mongoose");
 
-const expenseCategorySchema = new Schema(
+//  need some answers
+const brandSchema = new Schema(
   {
     name: {
       type: String,
       required: true,
       unique: true,
-      index: true,
     },
     description: {
       type: String,
-      required: false,
+      required: true,
+      unique: true,
     },
   },
   {
@@ -21,6 +21,6 @@ const expenseCategorySchema = new Schema(
   }
 );
 
-const ExpenseCategory = model("expenseCategories", expenseCategorySchema);
+const Brands = model("brands", brandSchema);
 
-module.exports = ExpenseCategory;
+module.exports = Brands;
