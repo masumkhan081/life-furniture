@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 const app = require("./src/app");
-const mongodbConnection = require("./config/mongodb");
-const config = require("./config");
+const mongodbConnection = require("./src/config/mongodb");
+const config = require("./src/config");
 require("dotenv").config();
 
 async function bootstrap() {
