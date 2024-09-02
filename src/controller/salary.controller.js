@@ -1,20 +1,33 @@
-const salaryService = require("../cervices/salary.service");
+const salaryService = require("../services/salary.service");
 const httpStatus = require("http-status");
+
+const {
+  sendCreateResponse,
+  sendDeletionResponse,
+  sendErrorResponse,
+  sendFetchResponse,
+  sendUpdateResponse,
+} = require("../utils/responseHandler");
+const { operableEntities } = require("../config/constants");
+
 
 async function createSalary(req, res) {
   const result = await salaryService.createAddress(req.body);
-  res.send(result);
+  if (result instanceof Error) {
+    sendErrorResponse({ res, error: result, what: operableEntities.address });
+  } else {
+    sendFetchResponse({ res, data: result, what: operableEntities.address });
+  }
 }
 
 async function getSalaries(req, res) {
   const result = await salaryService.getAddresses(req.query);
 
-  res.send({
-    statusCode: httpStatus.OK,
-    success: true,
-    message: "Salaries fetched successfully",
-    data: result,
-  });
+  if (result instanceof Error) {
+    sendErrorResponse({ res, error: result, what: operableEntities.address });
+  } else {
+    sendFetchResponse({ res, data: result, what: operableEntities.address });
+  }
 }
 //
 async function updateSalary(req, res) {
@@ -22,12 +35,20 @@ async function updateSalary(req, res) {
     id: req.params.id,
     data: req.body,
   });
-  res.send(result);
+  if (result instanceof Error) {
+    sendErrorResponse({ res, error: result, what: operableEntities.address });
+  } else {
+    sendFetchResponse({ res, data: result, what: operableEntities.address });
+  }
 }
 //
 async function deleteSalary(req, res) {
   const result = await salaryService.deleteAddress(req.params.id);
-  res.send(result);
+  if (result instanceof Error) {
+    sendErrorResponse({ res, error: result, what: operableEntities.address });
+  } else {
+    sendFetchResponse({ res, data: result, what: operableEntities.address });
+  }
 }
 //
 module.exports = {

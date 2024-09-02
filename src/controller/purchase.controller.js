@@ -1,19 +1,32 @@
-const purchaseService = require("../cervices/purchase.service");
+const purchaseService = require("../services/purchase.service");
 const httpStatus = require("http-status");
+
+const {
+  sendCreateResponse,
+  sendDeletionResponse,
+  sendErrorResponse,
+  sendFetchResponse,
+  sendUpdateResponse,
+} = require("../utils/responseHandler");
+const { operableEntities } = require("../config/constants");
+
 
 async function createPurchase(req, res) {
   const result = await purchaseService.createPurchase(req.body);
-  res.send(result);
+  if (result instanceof Error) {
+    sendErrorResponse({ res, error: result, what: operableEntities.address });
+  } else {
+    sendFetchResponse({ res, data: result, what: operableEntities.address });
+  }
 }
 async function getPurchasees(req, res) {
   const result = await purchaseService.getPurchases(req.query);
 
-  res.send({
-    statusCode: httpStatus.OK,
-    success: true,
-    message: "Purchasees fetched successfully",
-    data: result,
-  });
+  if (result instanceof Error) {
+    sendErrorResponse({ res, error: result, what: operableEntities.address });
+  } else {
+    sendFetchResponse({ res, data: result, what: operableEntities.address });
+  }
 }
 //
 async function updatePurchase(req, res) {
@@ -21,12 +34,20 @@ async function updatePurchase(req, res) {
     id: req.params.id,
     data: req.body,
   });
-  res.send(result);
+  if (result instanceof Error) {
+    sendErrorResponse({ res, error: result, what: operableEntities.address });
+  } else {
+    sendFetchResponse({ res, data: result, what: operableEntities.address });
+  }
 }
 //
 async function deletePurchase(req, res) {
   const result = await purchaseService.deletePurchase(req.params.id);
-  res.send(result);
+  if (result instanceof Error) {
+    sendErrorResponse({ res, error: result, what: operableEntities.address });
+  } else {
+    sendFetchResponse({ res, data: result, what: operableEntities.address });
+  }
 }
 //
 module.exports = {

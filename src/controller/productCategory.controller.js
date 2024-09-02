@@ -1,21 +1,34 @@
-const productCategoryService = require("../cervices/productCategory.service");
+const productCategoryService = require("../services/productCategory.service");
 const httpStatus = require("http-status");
 const { success_msg } = require("../utils/responseHandler");
+
+const {
+  sendCreateResponse,
+  sendDeletionResponse,
+  sendErrorResponse,
+  sendFetchResponse,
+  sendUpdateResponse,
+} = require("../utils/responseHandler");
+const { operableEntities } = require("../config/constants");
+
 
 async function createProductCategory(req, res) {
   const result = await productCategoryService.createProductCategory(req.body);
 
-  res.send(result);
+  if (result instanceof Error) {
+    sendErrorResponse({ res, error: result, what: operableEntities.address });
+  } else {
+    sendFetchResponse({ res, data: result, what: operableEntities.address });
+  }
 }
 async function getProductCategories(req, res) {
   const result = await productCategoryService.getProductCategories(req.query);
 
-  res.send({
-    statusCode: httpStatus.OK,
-    success: true,
-    message: success_msg.fetch("Product categories"),
-    data: result,
-  });
+  if (result instanceof Error) {
+    sendErrorResponse({ res, error: result, what: operableEntities.address });
+  } else {
+    sendFetchResponse({ res, data: result, what: operableEntities.address });
+  }
 }
 //
 async function updateProductCategory(req, res) {
@@ -23,14 +36,22 @@ async function updateProductCategory(req, res) {
     id: req.params.id,
     data: req.body,
   });
-  res.send(result);
+  if (result instanceof Error) {
+    sendErrorResponse({ res, error: result, what: operableEntities.address });
+  } else {
+    sendFetchResponse({ res, data: result, what: operableEntities.address });
+  }
 }
 //
 async function deleteProductCategory(req, res) {
   const result = await productCategoryService.deleteProductCategory(
     req.params.id
   );
-  res.send(result);
+  if (result instanceof Error) {
+    sendErrorResponse({ res, error: result, what: operableEntities.address });
+  } else {
+    sendFetchResponse({ res, data: result, what: operableEntities.address });
+  }
 }
 //
 module.exports = {

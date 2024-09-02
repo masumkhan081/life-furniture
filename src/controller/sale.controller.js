@@ -1,18 +1,31 @@
-const saleService = require("../cervices/sale.service");
+const saleService = require("../services/sale.service");
 const httpStatus = require("http-status");
+
+const {
+  sendCreateResponse,
+  sendDeletionResponse,
+  sendErrorResponse,
+  sendFetchResponse,
+  sendUpdateResponse,
+} = require("../utils/responseHandler");
+const { operableEntities } = require("../config/constants");
+
 
 async function createSale(req, res) {
   const result = await saleService.create(req.body);
-  res.send(result);
+  if (result instanceof Error) {
+    sendErrorResponse({ res, error: result, what: operableEntities.address });
+  } else {
+    sendFetchResponse({ res, data: result, what: operableEntities.address });
+  }
 }
 async function getSales(req, res) {
   const result = await saleService.getSales(req.query);
-  res.send({
-    statusCode: httpStatus.OK,
-    success: true,
-    message: "Sales fetched successfully",
-    data: result,
-  });
+  if (result instanceof Error) {
+    sendErrorResponse({ res, error: result, what: operableEntities.address });
+  } else {
+    sendFetchResponse({ res, data: result, what: operableEntities.address });
+  }
 }
 //
 async function updateSale(req, res) {
@@ -20,12 +33,20 @@ async function updateSale(req, res) {
     id: req.params.id,
     data: req.body,
   });
-  res.send(result);
+  if (result instanceof Error) {
+    sendErrorResponse({ res, error: result, what: operableEntities.address });
+  } else {
+    sendFetchResponse({ res, data: result, what: operableEntities.address });
+  }
 }
 //
 async function deleteSale(req, res) {
   const result = await saleService.deleteSale(req.params.id);
-  res.send(result);
+  if (result instanceof Error) {
+    sendErrorResponse({ res, error: result, what: operableEntities.address });
+  } else {
+    sendFetchResponse({ res, data: result, what: operableEntities.address });
+  }
 }
 //
 module.exports = {

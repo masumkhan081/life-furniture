@@ -19,6 +19,7 @@ const operableEntities = {
   salary: "salary",
   user: "user",
   showroom: "showroom",
+  brand:"brand",
 };
 
 const paginationFields = ["page", "limit", "sortBy", "sortOrder"];
@@ -64,13 +65,11 @@ const map_searchables = {
   [operableEntities.discount]: ["name"],
   [operableEntities.sale]: ["name"],
   [operableEntities.delivery]: ["name"],
-  [operableEntities.employee]: ["full_name","mobile"],
+  [operableEntities.employee]: ["full_name", "mobile"],
   [operableEntities.expense]: ["name"],
   [operableEntities.salary]: ["salary"],
   [operableEntities.showroom]: ["title"],
 };
-
- 
 
 module.exports = {
   paginationFields,
@@ -78,5 +77,6 @@ module.exports = {
   map_searchables,
   defaultSortOrder,
   map_default_sort_by,
-  operableEntities, 
+  operableEntities,
+  //
 };

@@ -58,12 +58,6 @@ function getSearchAndPagination({ query: query, what }) {
     ? (filterConditions["$or"] = searchConditions)
     : searchConditions;
 
-  // console.log(
-  //   JSON.stringify(searchConditions) +
-  //     "  filterConditions:   " +
-  //     JSON.stringify(filterConditions)
-  // );
-
   return {
     currentPage,
     searchTerm,

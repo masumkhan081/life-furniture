@@ -1,18 +1,31 @@
-const fileService = require("../cervices/file.service");
+const fileService = require("../services/file.service");
 const httpStatus = require("http-status");
+
+const {
+  sendCreateResponse,
+  sendDeletionResponse,
+  sendErrorResponse,
+  sendFetchResponse,
+  sendUpdateResponse,
+} = require("../utils/responseHandler");
+const { operableEntities } = require("../config/constants");
+
 
 async function createFile(req, res) {
   const result = await fileService.createFile(req.body);
-  res.send(result);
+  if (result instanceof Error) {
+    sendErrorResponse({ res, error: result, what: operableEntities.address });
+  } else {
+    sendFetchResponse({ res, data: result, what: operableEntities.address });
+  }
 }
 async function getFiles(req, res) {
   const result = await fileService.getFiles(req.query);
-  res.send({
-    statusCode: httpStatus.OK,
-    success: true,
-    message: "File fetched successfully",
-    data: result,
-  });
+  if (result instanceof Error) {
+    sendErrorResponse({ res, error: result, what: operableEntities.address });
+  } else {
+    sendFetchResponse({ res, data: result, what: operableEntities.address });
+  }
 }
 //
 async function updateFile(req, res) {
@@ -20,12 +33,20 @@ async function updateFile(req, res) {
     id: req.params.id,
     data: req.body,
   });
-  res.send(result);
+  if (result instanceof Error) {
+    sendErrorResponse({ res, error: result, what: operableEntities.address });
+  } else {
+    sendFetchResponse({ res, data: result, what: operableEntities.address });
+  }
 }
 //
 async function deleteFile(req, res) {
   const result = await fileService.deleteFile(req.params.id);
-  res.send(result);
+  if (result instanceof Error) {
+    sendErrorResponse({ res, error: result, what: operableEntities.address });
+  } else {
+    sendFetchResponse({ res, data: result, what: operableEntities.address });
+  }
 }
 //
 module.exports = {

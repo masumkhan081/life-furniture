@@ -1,19 +1,32 @@
-const showroomServices = require("../cervices/showroom.service");
+const showroomServices = require("../services/showroom.service");
 const httpStatus = require("http-status");
+
+const {
+  sendCreateResponse,
+  sendDeletionResponse,
+  sendErrorResponse,
+  sendFetchResponse,
+  sendUpdateResponse,
+} = require("../utils/responseHandler");
+const { operableEntities } = require("../config/constants");
+
 
 async function createShowroom(req, res) {
   const result = await showroomServices.createShowroom(req.body);
-  res.send(result);
+  if (result instanceof Error) {
+    sendErrorResponse({ res, error: result, what: operableEntities.address });
+  } else {
+    sendFetchResponse({ res, data: result, what: operableEntities.address });
+  }
 }
 
 async function getShowrooms(req, res) {
   const result = await showroomServices.getShowrooms(req.query);
-  res.send({
-    statusCode: httpStatus.OK,
-    success: true,
-    message: "Showrooms fetched successfully",
-    data: result,
-  });
+  if (result instanceof Error) {
+    sendErrorResponse({ res, error: result, what: operableEntities.address });
+  } else {
+    sendFetchResponse({ res, data: result, what: operableEntities.address });
+  }
 }
 
 async function updateShowroom(req, res) {
@@ -21,11 +34,19 @@ async function updateShowroom(req, res) {
     id: req.params.id,
     data: req.body,
   });
-  res.send(result);
+  if (result instanceof Error) {
+    sendErrorResponse({ res, error: result, what: operableEntities.address });
+  } else {
+    sendFetchResponse({ res, data: result, what: operableEntities.address });
+  }
 }
 async function deleteShowroom(req, res) {
   const result = await showroomServices.deleteShowroom(req.params.id);
-  res.send(result);
+  if (result instanceof Error) {
+    sendErrorResponse({ res, error: result, what: operableEntities.address });
+  } else {
+    sendFetchResponse({ res, data: result, what: operableEntities.address });
+  }
 }
 
 module.exports = {

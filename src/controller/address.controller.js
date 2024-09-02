@@ -1,18 +1,31 @@
-const addressService = require("../cervices/address.service");
+const addressService = require("../services/address.service");
 const httpStatus = require("http-status");
+
+const {
+  sendCreateResponse,
+  sendDeletionResponse,
+  sendErrorResponse,
+  sendFetchResponse,
+  sendUpdateResponse,
+} = require("../utils/responseHandler");
+const { operableEntities } = require("../config/constants");
 
 async function createAddress(req, res) {
   const result = await addressService.createAddress(req.body);
-  res.send(result);
+  if (result instanceof Error) {
+    sendErrorResponse({ res, error: result, what: operableEntities.address });
+  } else {
+    sendCreateResponse({ res, data: result, what: operableEntities.address });
+  }
 }
+
 async function getAddresses(req, res) {
   const result = await addressService.getAddresses(req.query);
-  res.send({
-    statusCode: httpStatus.OK,
-    success: true,
-    message: "Addresses fetched successfully",
-    data: result,
-  });
+  if (result instanceof Error) {
+    sendErrorResponse({ res, error: result, what: operableEntities.address });
+  } else {
+    sendFetchResponse({ res, data: result, what: operableEntities.address });
+  }
 }
 //
 async function updateAddress(req, res) {
@@ -20,12 +33,20 @@ async function updateAddress(req, res) {
     id: req.params.id,
     data: req.body,
   });
-  res.send(result);
+  if (result instanceof Error) {
+    sendErrorResponse({ res, error: result, what: operableEntities.address });
+  } else {
+    sendUpdateResponse({ res, data: result, what: operableEntities.address });
+  }
 }
 //
 async function deleteAddress(req, res) {
   const result = await addressService.deleteAddress(req.params.id);
-  res.send(result);
+  if (result instanceof Error) {
+    sendErrorResponse({ res, error: result, what: operableEntities.address });
+  } else {
+    sendDeletionResponse({ res, data: result, what: operableEntities.address });
+  }
 }
 //
 module.exports = {

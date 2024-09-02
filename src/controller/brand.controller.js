@@ -1,18 +1,30 @@
-const brandService = require("../cervices/brand.service");
+const brandService = require("../services/brand.service");
 const httpStatus = require("http-status");
+
+const {
+  sendCreateResponse,
+  sendDeletionResponse,
+  sendErrorResponse,
+  sendFetchResponse,
+  sendUpdateResponse,
+} = require("../utils/responseHandler");
+const { operableEntities } = require("../config/constants");
 
 async function createBrand(req, res) {
   const result = await brandService.createBrand(req.body);
-  res.send(result);
+  if (result instanceof Error) {
+    sendErrorResponse({ res, error: result, what: operableEntities.brand });
+  } else {
+    sendCreateResponse({ res, data: result, what: operableEntities.brand });
+  }
 }
 async function getBrandes(req, res) {
   const result = await brandService.getBrandes(req.query);
-  res.send({
-    statusCode: httpStatus.OK,
-    success: true,
-    message: "Brandes fetched successfully",
-    data: result,
-  });
+  if (result instanceof Error) {
+    sendErrorResponse({ res, error: result, what: operableEntities.brand });
+  } else {
+    sendFetchResponse({ res, data: result, what: operableEntities.brand });
+  }
 }
 //
 async function updateBrand(req, res) {
@@ -20,12 +32,20 @@ async function updateBrand(req, res) {
     id: req.params.id,
     data: req.body,
   });
-  res.send(result);
+  if (result instanceof Error) {
+    sendErrorResponse({ res, error: result, what: operableEntities.brand });
+  } else {
+    sendUpdateResponse({ res, data: result, what: operableEntities.brand });
+  }
 }
 //
 async function deleteBrand(req, res) {
   const result = await brandService.deleteBrand(req.params.id);
-  res.send(result);
+  if (result instanceof Error) {
+    sendErrorResponse({ res, error: result, what: operableEntities.brand });
+  } else {
+    sendDeletionResponse({ res, data: result, what: operableEntities.brand });
+  }
 }
 //
 module.exports = {
